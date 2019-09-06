@@ -15,6 +15,7 @@ import RadioForm from 'react-native-simple-radio-button';
 import moment from 'moment';
 
 import backgound from '../../assests/Images/back.jpg';
+import Imagepicker from '../../components/imagepicker.js'
 
 const entireScreenWidth = Dimensions.get('window').width;
 EStyleSheet.build({ $rem: entireScreenWidth / 380 });
@@ -144,9 +145,7 @@ class Signup2 extends Component {
                                 <Picker.Item label="Professor" value="professor" />
                                 <Picker.Item label="Other" value="other" />
                             </Picker>
-                            <TouchableOpacity >
-                                <Text style={styles.btn}>click to select a profile picture</Text>
-                            </TouchableOpacity>
+                            <Imagepicker/>
                             <Text>Fill the preference for better service</Text>
                             <TouchableOpacity
                                 onPress={() => this.onSubmitPressed()}
