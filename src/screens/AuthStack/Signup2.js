@@ -7,7 +7,8 @@ import {
     ScrollView,
     ImageBackground,
     TextInput,
-    Picker
+    Picker,
+    Alert
 } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import DatePicker from 'react-native-datepicker';
@@ -42,7 +43,7 @@ class Signup2 extends Component {
     }
 
     onSubmitPressed() {
-         this.validate();
+         //this.validate();
         this.props.navigation.navigate('PreferenceSelect');
     }
 
@@ -59,6 +60,7 @@ class Signup2 extends Component {
             );
         } else {
             // this.props.submitUserDetails();
+            this.onSubmitPressed();
         }
     }
 
@@ -148,7 +150,7 @@ class Signup2 extends Component {
                             <Imagepicker/>
                             <Text>Fill the preference for better service</Text>
                             <TouchableOpacity
-                                onPress={() => this.onSubmitPressed()}
+                                onPress={() => this.validate()}
                                 style={styles.signInB}
                             >
                                 <Text style={{ color: 'white', fontSize: 15 }}>submit</Text>
