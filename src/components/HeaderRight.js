@@ -13,11 +13,12 @@ class HeaderRight extends Component {
             <TouchableWithoutFeedback onPress={onPress.bind(this)}>
                 <View style={styles.mainContainerStyle}>
                     <Icon
-                        name={'chat'}
+                        name={'map'}
                         style={styles.iconStyle}
                         size={EStyleSheet.value('25rem')}
                     />
                 </View>
+                
             </TouchableWithoutFeedback>
         );
     }
