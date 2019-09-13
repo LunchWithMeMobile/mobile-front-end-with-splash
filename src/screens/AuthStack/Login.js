@@ -16,7 +16,6 @@ import { SkypeIndicator } from 'react-native-indicators';
 import CheckBox from 'react-native-checkbox';
 
 import checked from '../../assests/Images/checkboxChecked.png';
-
 import unchecked from '../../assests/Images/checkboxUnchecked.png';
 import backgound from '../../assests/Images/back.jpg';
 import { REG_EMAIL_ADDRESS } from '../../config/Constants';
@@ -47,9 +46,8 @@ class Login extends Component {
     }
 
     onLoginPressed = () => {
-        const { email, password } = this.props;
-        // this.validate(email, password);
-        this.props.navigation.navigate('App');
+        const { username, password } = this.props;
+        this.validate(username, password);
     }
 
     validate(username, password) {
@@ -62,7 +60,7 @@ class Login extends Component {
                 ],
             );
         } else {
-            this.props.navigation.navigate('App');
+            this.props.loginUser(username, password, this.state.isChecked);
         }
     }
 
@@ -106,12 +104,17 @@ class Login extends Component {
                                     <Text style={{ color: 'rgba(240,208,193,0.9)', marginLeft: 40, fontStyle: 'italic' }}>Forgot Password</Text>
                                 </TouchableOpacity>
                             </View>
-                            <TouchableOpacity
-                                style={styles.button}
-                                onPress={() => this.onLoginPressed()}
-                            >
-                                <Text style={styles.buttonText} >Log in</Text>
-                            </TouchableOpacity>
+                            {
+                                this.props.loading ?
+                                    <SkypeIndicator color={'white'} size={EStyleSheet.value('40rem')} />
+                                    :
+                                    <TouchableOpacity
+                                        style={styles.button}
+                                        onPress={() => this.onLoginPressed()}
+                                    >
+                                        <Text style={styles.buttonText} >Log in</Text>
+                                    </TouchableOpacity>
+                            }
                             <Text style={{ color: "#ffffff", marginTop: 40, }}>or Log in with</Text>
                             <View style={styles.apiLogIn}>
                                 <View style={styles.buttonContainer}>
@@ -242,7 +245,6 @@ const styles = EStyleSheet.create({
         marginBottom: '5rem',
     },
 });
-//to make
 
 const mapStateToProps = state => {
     return {
@@ -253,6 +255,5 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, actions)(Login);
-
 // TODO
 // connect to the backend

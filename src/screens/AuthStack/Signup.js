@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import { SkypeIndicator } from 'react-native-indicators';
 
 import backgound from '../../assests/Images/back.jpg';
 import { REG_EMAIL_ADDRESS } from '../../config/Constants';
@@ -27,8 +28,8 @@ class Signup extends Component {
 
     onSignupPressed() {
         const { email, username, password, confirmPassword } = this.props;
-        // this.validate(email, username, password, confirmPassword);
-        this.props.navigation.navigate('Signup2');
+        this.validate(email, username, password, confirmPassword);
+        // this.props.navigation.navigate('Signup2');
     }
 
     validate(email, username, password, confirmPassword) {
@@ -57,7 +58,7 @@ class Signup extends Component {
                 ],
             );
         } else {
-            // this.props.signupUser(email, username. password);
+            this.props.signUpUser(email, username, password, confirmPassword);
         }
     }
 
@@ -112,11 +113,17 @@ class Signup extends Component {
                                     <Text style={{ color: '#ffccbc', marginBottom: 7, textDecorationLine: "underline", fontStyle: "italic" }}> terms and Conditions.</Text>
                                 </TouchableOpacity>
                             </View>
-                            <TouchableOpacity
-                                onPress={() => this.onSignupPressed()}
-                                style={styles.signInB}             >
-                                <Text style={styles.signInBText}>Sign Up</Text>
-                            </TouchableOpacity>
+                            {
+                                this.props.loading ?
+                                    <SkypeIndicator color={'white'} size={EStyleSheet.value('40rem')} />
+                                    :
+                                    <TouchableOpacity
+                                        onPress={() => this.onSignupPressed()}
+                                        style={styles.signInB}
+                                    >
+                                        <Text style={styles.signInBText}>Sign Up</Text>
+                                    </TouchableOpacity>
+                            }
                         </View>
                     </View>
                     <View style={styles.newAccount}>

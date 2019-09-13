@@ -11,6 +11,9 @@ import {
     SIGNUP_USER,
     SIGNUP_SUCCESS,
     SIGNUP_FAILED,
+    SET_USERNAME,
+    SET_ACCESS_TOKEN,
+    SET_USER_ID,
 } from '../types';
 
 const INITIAL_STATE = {
@@ -26,6 +29,12 @@ const INITIAL_STATE = {
     signupLoading: false
 };
 
+const LOGIN_INITIAL_STATE = {
+    username: '',
+    password: '',
+    loginLoading: false
+};
+
 export default (state = INITIAL_STATE, action) => {
     console.log(action);
     switch (action.type) {
@@ -36,9 +45,15 @@ export default (state = INITIAL_STATE, action) => {
         case LOGIN_USER:
             return { ...state, loginLoading: true };
         case LOGIN_SUCCESS:
-            return { ...state, loginLoading: false };
+            return { ...state, loginLoading: false, ...LOGIN_INITIAL_STATE };
         case LOGIN_FAILED:
             return { ...state, loginLoading: false };
+        case SET_USERNAME:
+            return { ...state, username: action.payload };
+        case SET_USER_ID:
+            return { ...state, userId: action.payload };
+        case SET_ACCESS_TOKEN:
+            return { ...state, accessToken: action.payload };
         case SIGNUP_EMAIL_CHANGED:
             return { ...state, signupEmail: action.payload };
         case SIGNUP_USERNAME_CHANGED:

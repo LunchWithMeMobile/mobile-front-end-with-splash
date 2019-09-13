@@ -15,6 +15,7 @@
     "native-base": "^2.13.5",
     "react": "16.8.6",
     "react-native": "0.60.5",
+    "react-native-animated-hide-view": "^1.0.0",
     "react-native-checkbox": "^2.0.0",
     "react-native-datepicker": "^1.7.2",
     "react-native-extended-stylesheet": "^0.12.0",
