@@ -61,11 +61,16 @@ pic=()=>{
     return (
      
         
-
+        <View style={{width:'90%',height:200}}>
         <TouchableOpacity
         onPress={this.pic}>
           <Text style={styles.btn}>select a profile picture*</Text>
+          
         </TouchableOpacity>
+        <Image source={this.state.avatarSource} style={{ width: '50%', height: '90%' }}/>
+        </View>
+
+
 /* 
         <TouchableOpacity onPress={this.uploadPic}>
           <Text>Upload</Text>

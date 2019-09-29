@@ -34,7 +34,7 @@ const LOGIN_INITIAL_STATE = {
     password: '',
     loginLoading: false
 };
-
+//a function is exported
 export default (state = INITIAL_STATE, action) => {
     console.log(action);
     switch (action.type) {
