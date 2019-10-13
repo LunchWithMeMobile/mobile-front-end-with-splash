@@ -19,4 +19,9 @@ export const SIGNUP_SUCCESS = 'signup_success';
 export const SIGNUP_FAILED = 'signup_failed';
 
 //signup2/editProfile
-export const PROFILE_FULLNAME_CHANGED = "profile_fullName_changed"
+export const PROFILE_FULLNAME_CHANGED = "profile_fullName_changed";
+
+//likes
+export const GET_USER_LIKES = 'get_user_likes';
+export const GET_USER_LIKES_SUCCESS = 'get_user_likes_success';
+export const GET_USER_LIKES_FAILED = 'get_user_likes_failed';

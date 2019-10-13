@@ -17,26 +17,31 @@ import {
   Text,
   StatusBar,
   TouchableOpacity,
+  Image
 } from 'react-native';
 
 export default class ListItem extends React.Component{
  
   
   render(){
-    const {username,fullname,occupation}=this.props;
+    const {username,fullname,occupation, image}=this.props;
     return(
         <View >
    
         <View style={styles.listItem}>
         
-          <View style={styles.pic}></View>
+          <Image 
+            style={styles.pic} 
+            source={{uri: image}}
+            resizeMode={'cover'}
+          />
          
-          <View style={styles.info}>
+          <View style={styles.info}> 
           <TouchableOpacity >
-          <Text style={styles.heading}>{this.props.username}</Text>
-          <Text style={styles.para}>{this.props.fullname}</Text>
+          <Text style={styles.heading}>{username}</Text>
+          <Text style={styles.para}>{fullname}</Text>
           
-          <Text style={styles.para}>{this.props.occupation}</Text>
+          <Text style={styles.para}>{occupation}</Text>
           </TouchableOpacity>
           </View>
           <View style={styles.like}>
@@ -89,8 +94,9 @@ const styles = StyleSheet.create({
          // marginLeft:"4%"
     },
     pic:{
-      width:'20%',
-      height:'70%',
+      width:80,
+      height:80,
+      borderRadius: 40,
       backgroundColor:'#DFE0E5',
       marginTop:'5%',
       borderRadius:200,
