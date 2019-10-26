@@ -8,7 +8,7 @@ const INITIAL_STATE = {
     likesListLoading: false,
     likesList: [],
 }
-
+//action is just a parameter.
 export default (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case GET_USER_LIKES:

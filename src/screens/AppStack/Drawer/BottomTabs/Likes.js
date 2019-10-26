@@ -76,6 +76,7 @@ class Likes extends Component {
         AsyncStorage.getItem('accessToken').then(accessToken => {
             AsyncStorage.getItem('userId').then(userId => {
                 this.props.getLikesList(accessToken, userId);
+                //getLikesList is defined in AuthAction
             });
         });
     }
@@ -128,6 +129,7 @@ const styles = EStyleSheet.create({
 
 const mapStateToProps = state => {
     return {
+        //app is  defined in the index file of reducers.
         likesListLoading: state.app.likesListLoading,
         likesList: state.app.likesList,
     }

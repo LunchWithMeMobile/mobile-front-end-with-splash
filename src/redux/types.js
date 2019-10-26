@@ -25,3 +25,8 @@ export const PROFILE_FULLNAME_CHANGED = "profile_fullName_changed";
 export const GET_USER_LIKES = 'get_user_likes';
 export const GET_USER_LIKES_SUCCESS = 'get_user_likes_success';
 export const GET_USER_LIKES_FAILED = 'get_user_likes_failed';
+
+//superlikes
+export const GET_USER_SUPERLIKES="get_user_superlikes";
+export const GET_USER_SUPERLIKES_FAILED="get_user_superLikes_failed";
+export const GET_USER_SUPERLIKES_SUCCESS="get_user_superlikes_failed";
