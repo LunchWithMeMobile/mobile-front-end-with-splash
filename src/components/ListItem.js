@@ -9,6 +9,7 @@
 import React from 'react';
 import PropTypes from  "prop-types";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import avatar from '../assests/Images/avatar.jpg';
 import {
   SafeAreaView,
   StyleSheet,
@@ -32,7 +33,7 @@ export default class ListItem extends React.Component{
         
           <Image 
             style={styles.pic} 
-            source={{uri: image}}
+            source={avatar}
             resizeMode={'cover'}
           />
          
@@ -59,9 +60,9 @@ export default class ListItem extends React.Component{
 }
 
 ListItem.propTypes ={
-   username: PropTypes.string,
+username: PropTypes.string,
  fullname: PropTypes.string,
-   occupation:PropTypes.string
+  occupation:PropTypes.string
 }
 ListItem.defaultProps ={
    username:"userX",

@@ -10,76 +10,29 @@ import {
     Alert
 } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {
-    FORGOTPASSWORD1,
-} from '../../api/API';
-import * as actions from '../../redux/actions';
-import { connect } from 'react-redux';
 import { SkypeIndicator } from 'react-native-indicators';
-
 import backgound from '../../assests/Images/back.jpg';
 
 const entireScreenWidth = Dimensions.get('window').width;
 EStyleSheet.build({ $rem: entireScreenWidth / 380 });
 
-class ForgotPassword extends Component {
+class ForgotPassword2 extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-          
+           verificationCode: '',
+           loading:false,
+           
         }
     }
-    onEmailChanged=(email)=>{
-        this.props.onEmailChangedRESETPASS(email);
-    }
+
    
-    onSubmitPressedTest(){
-        const { email } = this.props;
-            console.log(email);
 
-            //this.props.navigation.navigate('ForgotPassword2');
-
-            fetch(FORGOTPASSWORD1,{
-                method:'POST',
-                headers:{
-                    'Content-Type':'application/json',
-                },
-                body:JSON.stringify({
-                    email:email
-                })
-
-
-            }).then(res=>{
-                console.log(res);
-
-                if(res.status==200)
-               {
-                    alert("please verify your email!");
-                    console.log(res.json());
-               }
-
-            }).catch(err=>{
-                console.log(err);
-                alert(err);
-            })
-
-
-    }
     onSubmitPressed() {
-        const { email } = this.props;
-        if (email === '' ) {
-            Alert.alert(
-                'Error!',
-                'Please fill all the fields',
-                [
-                    { text: 'Ok' },
-                ],
-            );
-        } else  {
-           
-            this.props.forgetPasswordEmail(email);
-        } 
+       
+             this.props.navigation.navigate('ForgotPassword3');
+        
     }
 
     render() {
@@ -91,40 +44,35 @@ class ForgotPassword extends Component {
                         <View style={styles.container1}>
                             <ImageBackground source={backgound} style={{ width: '100%', height: '100%' }}>
                                 <View style={styles.container}>
-                                    <Text style={styles.heading}>Forgot Password?</Text>
-                                    <TextInput style={styles.input}
+                                    <Text style={styles.heading}>Enter Verification Code</Text>
+
+                                    <Text style={styles.instructions}>Enter the verification code that is sent to your email....</Text>
+                                   {/*  <TextInput style={styles.input}
                                         placeholder="email ..."
-                                        value={this.props.email}
-                                        onChangeText={(email) => this.onEmailChanged(email)}
+                                        value={this.state.email}
+                                        onChangeText={(text) => this.setState({ email: text })}
                                         placeholderTextColor="#ddab9c"
-                                    />
-                                    {/* <TextInput style={styles.input}
-                                        placeholder=" new password ..."
+                                    /> */}
+                                     <TextInput style={styles.input}
+                                        placeholder="  verification code ..."
                                         secureTextEntry={true}
                                         placeholderTextColor="#ddab9c"
                                         value={this.state.newPassword}
-                                        onChangeText={(text) => this.setState({ newPassword: text })}
+                                        onChangeText={(text) => this.setState({ verificationCode: text })}
                                     />
-                                    <TextInput style={styles.input}
-                                        placeholder="confirm password ..."
-                                        secureTextEntry={true}
-                                        placeholderTextColor="#ddab9c"
-                                        value={this.state.confirmPassword}
-                                        onChangeText={(text) => this.setState({ confirmPassword: text })}
-                                    /> */}
-                                   {/*  {this.passwordMatch()} */}
-                                    
-                                 { this.props.loading?
-                                    <SkypeIndicator color={'white'} size={EStyleSheet.value('40rem')} />
-                                    :
-                                     
-                                     <TouchableOpacity
+                                   {
+                                       this.state.loading?
+
+                                         <SkypeIndicator color={'white'} size={EStyleSheet.value('40rem')} />
+                                         :
+                                        <TouchableOpacity
                                         onPress={() => this.onSubmitPressed()}
                                         style={styles.button}
                                     >
-                                        <Text style={styles.buttonText}>Next</Text>
-                                    </TouchableOpacity>}   
-                                    
+                                        <Text style={styles.buttonText}>Submit</Text>
+                                    </TouchableOpacity>
+
+                                   }
                                    
                                 </View>
                             </ImageBackground>
@@ -152,6 +100,9 @@ const styles = EStyleSheet.create({
         textAlign: 'center',
         fontWeight: "600",
         fontSize: '16rem',
+    },
+    instructions:{
+        color:'#ffffff',
     },
     button: {
         backgroundColor: '#c97b63',
@@ -202,15 +153,7 @@ const styles = EStyleSheet.create({
     },
 });
 
-const mapStateToProps = state => {
-    return {
-        email: state.auth.emailForgetPassword,
-       // password: state.auth.password,
-        loading: state.auth.emailFGP_loading,
-    };
-};
-
-export default connect(mapStateToProps, actions)(ForgotPassword);
+export default ForgotPassword2;
 
 // TODO
 // connect to the backend

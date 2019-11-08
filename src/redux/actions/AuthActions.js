@@ -17,11 +17,17 @@ import {
     SIGNUP_FAILED,
     SET_USER_ID,
     SET_USER_DATA,
+    FORGETPASSWORD_EMAIL_CHANGED,
+    SUBMIT_EMAIL,
+    SUBMIT_EMAIL_FAIL,
+    SUBMIT_EMAIL_SUCCESS
+
 } from '../types';
 
 import {
     LOGIN,
-    SIGNUP
+    SIGNUP,
+    FORGOTPASSWORD1
 } from '../../api/API';
 
 import NavigationService from '../../services/NavigationService';
@@ -203,6 +209,7 @@ export const signUpUser = (email, username, password, confirmPass) => {
             }
         }).catch(err => {
             console.log(err);
+            NavigationService.navigate('Signup2');
             dispatch({ type: SIGNUP_FAILED });
             Alert.alert(
                 'Signup Failed!',
@@ -214,3 +221,55 @@ export const signUpUser = (email, username, password, confirmPass) => {
         });
     };
 };
+
+
+//forgetpassword actions---------------------------------
+
+export const onEmailChangedRESETPASS = (email) => {
+    return {
+        type: FORGETPASSWORD_EMAIL_CHANGED,
+        payload: email
+    };
+};
+
+export const forgetPasswordEmail=(email)=>{
+    return (dispatch) => {
+        dispatch({ type: SUBMIT_EMAIL });
+        fetch(FORGOTPASSWORD1, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: email,
+              
+            })
+        }).then(response => {
+            console.log(response);
+            if(response.status==200)
+            {
+                dispatch({ type: SUBMIT_EMAIL_SUCCESS });
+               
+                 alert("please verify your email!");
+                 console.log(response.json());
+                 NavigationService.navigate('ForgotPassword2');
+            }
+             
+        }).catch(err => {
+            console.log(err);
+            dispatch({ type: SUBMIT_EMAIL_FAIL });
+            Alert.alert(
+                'Signup Failed!',
+                'Something went wrong',
+                [
+                    { text: 'Ok' },
+                ],
+            );
+        });
+    };
+
+
+}
+
+    
+

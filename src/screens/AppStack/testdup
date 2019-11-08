@@ -1,0 +1,108 @@
+import React, { Component } from 'react';
+import {
+    Dimensions,
+    View,
+    Text,
+    TouchableOpacity,
+    Button, Platform
+} from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
+import EStyleSheet from 'react-native-extended-stylesheet';
+import AsyncStorage from '@react-native-community/async-storage';
+
+const entireScreenWidth = Dimensions.get('window').width;
+EStyleSheet.build({ $rem: entireScreenWidth / 380 });
+
+
+class TimePickerScreen extends Component{
+
+
+
+
+    state = {
+        date: new Date('2020-06-12T14:42:42'),
+        mode: 'date',
+        show: false,
+        time:'',
+      }
+
+
+      show = mode => {
+        this.setState({
+          show: true,
+          mode:'',
+        });
+      }
+
+      timepicker = () => {
+        this.show('time');
+      }
+
+
+
+
+render(){
+
+
+    return(
+        <View style={styles.mainContainer}>
+            <Text>Select your time </Text>
+            
+            <TouchableOpacity  style={styles.buttonT}>
+            <Text style={styles.btnText}> starting time: </Text>
+            </TouchableOpacity>
+          
+            <TouchableOpacity style={styles.buttonT}>
+            <Text style={styles.btnText}>Ending  time: </Text>
+            </TouchableOpacity>
+
+           { show && <DateTimePicker value={date}
+                    mode={time}
+                    is24Hour={true}
+                    display="default"
+                    onChange={this.setDate} />
+        }
+
+        </View>
+
+
+
+    )
+}
+
+
+
+
+
+}
+
+
+const styles=EStyleSheet.create({
+
+    mainContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    buttonT:{
+            width:'150rem',
+            height:'50rem',
+            backgroundColor:'#c97b63',
+            borderRadius:20,
+            margin:'5rem',
+    },
+    btnText:{
+            alignContent:'center',
+            alignSelf:'center',
+            color: "#fffffb",
+    },
+
+
+
+
+});
+
+
+export default TimePickerScreen;

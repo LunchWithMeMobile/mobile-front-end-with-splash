@@ -10,7 +10,9 @@ import AnimatedHideView from 'react-native-animated-hide-view';
 import AsyncStorage from '@react-native-community/async-storage';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import Icon from 'react-native-vector-icons/Entypo';
+//import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import NavigationService from '../services/NavigationService';
+//import { mdiCalendarClock } from '@mdi/js';
 
 const entireScreenWidth = Dimensions.get('window').width;
 EStyleSheet.build({ $rem: entireScreenWidth / 380 });
@@ -30,6 +32,9 @@ class HeaderRight extends Component {
 
     onMapPress() {
         NavigationService.navigate('MapScreen');
+    }
+    onTimeSlotPress() {
+        NavigationService.navigate('TimePickerScreen');
     }
 
     onChatPress() {
@@ -75,9 +80,16 @@ class HeaderRight extends Component {
     render() {
         return (
             <View style={styles.mainContainerStyle}>
+                <TouchableOpacity style={styles.touchable} onPress={() => this.onTimeSlotPress()}>
+                    <Icon
+                        name={'time-slot'}
+                        style={styles.iconStyle}
+                        size={EStyleSheet.value('25rem')}
+                    />
+                </TouchableOpacity>
                 <TouchableOpacity style={styles.touchable} onPress={() => this.onMapPress()}>
                     <Icon
-                        name={'map'}
+                        name={'location'}
                         style={styles.iconStyle}
                         size={EStyleSheet.value('25rem')}
                     />

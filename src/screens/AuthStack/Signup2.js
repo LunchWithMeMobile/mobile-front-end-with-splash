@@ -8,13 +8,15 @@ import {
     ImageBackground,
     TextInput,
     Picker,
-    Alert
+    Alert,
+    AsyncStorage,
 } from 'react-native';
+import { connect } from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import DatePicker from 'react-native-datepicker';
 import RadioForm from 'react-native-simple-radio-button';
 import moment from 'moment';
-
+import * as actions from '../../redux/actions';
 import backgound from '../../assests/Images/back.jpg';
 import Imagepicker from '../../components/imagepicker.js'
 
@@ -33,24 +35,57 @@ class Signup2 extends Component {
         super(props);
 
         this.state = {
-            dateOfBirth: moment().format('DD-MM-YYYY'),
+           // dateOfBirth: moment().format('DD-MM-YYYY'),
             fullname: '',
-            gender: '',
-            message: '',
-            telephone: '',
-            profession: '',
-        }
+            //gender: '',
+           // message: '',
+           // telephone: '',
+          //  profession: '',
+        };
+    }
+
+    onFullnameChanged(value) {
+        this.props.RFullnameChanged(value);
+    }
+
+    onTelephoneChanged(value) {
+        this.props.RTelephoneChanged(value);
+    }
+
+    onDOBChanged(value) {
+        this.props.RDOBChanged(value);
+    }
+
+    onGenderChanged(value) {
+        this.props.RGenderChanged(value);
+    }
+    onDescriptionChanged(value) {
+        this.props.RDescriptionChanged(value);
+    }
+    onProfessionChanged(value) {
+        this.props.RProfessionChanged(value);
+    }
+    onInterestedProfessionChanged(value){
+
+        this.props.InterestedProfessionChanged(value);
     }
 
     onSubmitPressed() {
-         //this.validate();
-        this.props.navigation.navigate('PreferenceSelect');
-    }
+        
+        
+        const {fname,gender,dob,description,telephone,profession,email,intProfession}=this.props
+        this.validate(fname,gender,dob,description,telephone,profession,email,intProfession);
 
-    validate() {
-        const { fullname, gender, message, telephone, profession } = this.state;
-        console.log(fullname, gender, message, telephone, profession);
-        if (fullname === '' || gender === '' || message === '' || telephone === '' || profession === '') {
+        // this.props.RDetails(fname,gender,dob,description,telephone,profession)
+       // this.props.navigation.navigate('PreferenceSelect');
+    }
+   
+    validate(fname,gender,dob,description,telephone,profession,email,intProfession) {
+        //const { fname, gender, description, telephone, profession } = this.props; 
+        console.log("hiii");
+        //const { fname, gender, description, telephone, profession } = this.state;
+        console.log(fname, gender, dob,description, telephone, profession,intProfession);
+        if (fname === '' || gender === '' || description === '' || telephone === '' || profession === '',intProfession==='') {
             Alert.alert(
                 'Error!',
                 'Please fill all the fields',
@@ -59,8 +94,9 @@ class Signup2 extends Component {
                 ],
             );
         } else {
-            // this.props.submitUserDetails();
-            this.onSubmitPressed();
+            // this.props.submitUserDetails()
+            this.props.RDetails(fname,gender,dob,description,telephone,profession,email,intProfession)
+            
         }
     }
 
@@ -75,15 +111,16 @@ class Signup2 extends Component {
                             <TextInput
                                 style={styles.txt2}
                                 placeholder="Enter Full Name"
-                                value={this.state.fullname}
-                                onChangeText={text => this.setState({ fullname: text })}
+                                value={this.state.fname}
+   
+                                onChangeText={text => this.onFullnameChanged(text)}
                                 placeholderTextColor="#D5AFAF"
                             />
                             <Text style={styles.txt}>Gender*</Text>
                             <RadioForm
                                 radio_props={gender}
                                 initial={-1}
-                                onPress={(value) => { this.setState({ gender: value }) }}
+                                onPress={(value) => {this.onGenderChanged(value) }}
                                 buttonSize={12}
                                 selectedButtonColor={'black'}
                                 buttonColor={'grey'}
@@ -94,7 +131,7 @@ class Signup2 extends Component {
                             <Text style={styles.txt}>Date of Birth*</Text>
                             <DatePicker
                                 style={{ width: 200 }}
-                                date={this.state.dateOfBirth} //initial date from state
+                                date={this.state.dob} //initial date from state
                                 mode="date" //The enum of date, datetime and time
                                 placeholder="select date"
                                 format="DD-MM-YYYY"
@@ -115,13 +152,13 @@ class Signup2 extends Component {
                                         color: '#D5AFAF'
                                     }
                                 }}
-                                onDateChange={(date) => { this.setState({ dateOfBirth: date }) }}
+                                onDateChange={(date) => { this.onDOBChanged(date) }}
                             />
                             <Text style={styles.txt}>Description about yourself*</Text>
                             <TextInput style={styles.txt2}
                                 placeholder="Self Description"
                                 //secureTextEntry={true}
-                                onChangeText={text => this.setState({ message: text })}
+                                onChangeText={text => this.onDescriptionChanged(text)}
                                 placeholderTextColor="#D5AFAF"
                             />
                             <Text style={styles.txt}>Mobile Number* </Text>
@@ -130,16 +167,30 @@ class Signup2 extends Component {
                                 placeholder="Mobile Number"
                                 //secureTextEntry={true}
                                 value={this.state.telephone}
-                                onChangeText={text => this.setState({ telephone: text })}
+                                onChangeText={text => this.onTelephoneChanged(text) }
                                 placeholderTextColor="#D5AFAF"
                             />
-                            <Text style={styles.txt}>Select Occupation*</Text>
+                            <Text style={styles.txt}>Select Your Occupation*</Text>
                             <Picker
-                                selectedValue={this.state.job}
+                                //selectedValue={this.state.profession}
                                 style={{ height: 50, width: 150, color: "#D5AFAF" }}
                                 selectedValue={this.state.profession}
-                                onValueChange={(itemValue, itemIndex) =>
-                                    this.setState({ profession: itemValue })
+                                onValueChange={(itemValue) =>
+                                    this.onProfessionChanged(itemValue)
+                                }>
+                                <Picker.Item label="student" value="student" />
+                                <Picker.Item label="software Developer" value="softwareDeveloper" />
+                                <Picker.Item label="Doctor" value="doctor" />
+                                <Picker.Item label="Professor" value="professor" />
+                                <Picker.Item label="Other" value="other" />
+                            </Picker>
+                            <Text style={styles.txt}>Select the prefered Occupation of the partner*</Text>
+                            <Picker
+                                //selectedValue={this.state.profession}
+                                style={{ height: 50, width: 150, color: "#D5AFAF" }}
+                                selectedValue={this.state.profession}
+                                onValueChange={(itemValue) =>
+                                    this.onInterestedProfessionChanged(itemValue)
                                 }>
                                 <Picker.Item label="student" value="student" />
                                 <Picker.Item label="software Developer" value="softwareDeveloper" />
@@ -148,9 +199,9 @@ class Signup2 extends Component {
                                 <Picker.Item label="Other" value="other" />
                             </Picker>
                             <Imagepicker/>
-                            <Text>Fill the preference for better service</Text>
+                            <Text>Fill the preference to obtain a  better service</Text>
                             <TouchableOpacity
-                                onPress={() => this.validate()}
+                                onPress={() => this.onSubmitPressed()}
                                 style={styles.signInB}
                             >
                                 <Text style={{ color: 'white', fontSize: 15 }}>submit</Text>
@@ -240,5 +291,17 @@ const styles = EStyleSheet.create({
         fontSize: 20,
     }
 });
-
-export default Signup2;
+const mapStateToProps = state => {
+    return {
+        fname: state.auth2.fname,
+        gender:state.auth2.gender,
+       telephone: state.auth2.telephone,
+       dob: state.auth2.dob,
+       description: state.auth2.description,
+        profession:state.auth2.profession,
+        email:state.auth.signupEmail,
+        intProfession:state.auth2.intProfession,
+       // loading: state.auth.loginLoading
+    };
+};
+export default connect(mapStateToProps, actions)(Signup2);

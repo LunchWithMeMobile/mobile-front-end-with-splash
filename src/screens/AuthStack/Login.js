@@ -29,8 +29,7 @@ class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isChecked: false,
-        };
+            isChecked: false,        };
     }
 
     onUsernameChanged(value) {
@@ -121,7 +120,7 @@ class Login extends Component {
                                     <TouchableOpacity
                                         style={[styles.buttonSocialMd, { backgroundColor: '#3b5998', }]}
                                         onPress={_ => this._fbAuth()}>
-                                        <Text style={styles.buttonText} >facebook</Text>
+                                        <Text style={styles.buttonText} ></Text>
                                     </TouchableOpacity>
                                 </View>
                                 <View style={styles.buttonContainer}>
@@ -129,7 +128,7 @@ class Login extends Component {
                                         style={[styles.buttonSocialMd, { backgroundColor: '#0e76a8', }]}
                                         onPress={this.onPress}
                                     >
-                                        <Text style={styles.buttonText} >LinkedIN</Text>
+                                        <Text style={styles.buttonText} ></Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>

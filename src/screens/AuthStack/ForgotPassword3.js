@@ -10,65 +10,37 @@ import {
     Alert
 } from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
-import {
-    FORGOTPASSWORD1,
-} from '../../api/API';
-import * as actions from '../../redux/actions';
 import { connect } from 'react-redux';
 import { SkypeIndicator } from 'react-native-indicators';
-
 import backgound from '../../assests/Images/back.jpg';
-
+import {
+    FORGOTPASSWORD3,
+} from '../../api/API';
 const entireScreenWidth = Dimensions.get('window').width;
 EStyleSheet.build({ $rem: entireScreenWidth / 380 });
 
-class ForgotPassword extends Component {
+class ForgotPassword3 extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-          
+           loading:false,
+            newPassword: '',
+            confirmPassword: '',
         }
     }
-    onEmailChanged=(email)=>{
-        this.props.onEmailChangedRESETPASS(email);
+
+    passwordMatch() {
+        if (this.state.newPassword !== this.state.confirmPassword) {
+            return (<Text style={{ color: "tomato" }}>passwords do not match...</Text>)
+        }
     }
-   
-    onSubmitPressedTest(){
-        const { email } = this.props;
-            console.log(email);
 
-            //this.props.navigation.navigate('ForgotPassword2');
-
-            fetch(FORGOTPASSWORD1,{
-                method:'POST',
-                headers:{
-                    'Content-Type':'application/json',
-                },
-                body:JSON.stringify({
-                    email:email
-                })
-
-
-            }).then(res=>{
-                console.log(res);
-
-                if(res.status==200)
-               {
-                    alert("please verify your email!");
-                    console.log(res.json());
-               }
-
-            }).catch(err=>{
-                console.log(err);
-                alert(err);
-            })
-
-
-    }
     onSubmitPressed() {
-        const { email } = this.props;
-        if (email === '' ) {
+        this.setState({loading:true});
+        const { newPassword, confirmPassword } = this.state;
+        const {email}=this.props;
+        if ( newPassword === '' || confirmPassword === '') {
             Alert.alert(
                 'Error!',
                 'Please fill all the fields',
@@ -76,10 +48,41 @@ class ForgotPassword extends Component {
                     { text: 'Ok' },
                 ],
             );
-        } else  {
-           
-            this.props.forgetPasswordEmail(email);
         } 
+        else 
+       {
+           
+           console.log(newPassword+"  "+confirmPassword);
+           console.log(email);
+           fetch(FORGOTPASSWORD3,{
+               method:'POST',
+               headers:{
+                'Content-Type':'application/json',
+               },
+
+               body:JSON.stringify({
+                newpassword:newPassword,
+                newcnfpass:confirmPassword,
+                email:email,
+            })
+           }).then(response=>{
+               console.log(response);
+               if(response.ok){
+                   return response.json().then(resJson=>{
+                       console.log(resJson);
+                       if(resJson.success){
+                           this.setState({loading:false});
+                           alert('You have successfullt reset your password !');
+                           this.props.navigation.navigate('Login');
+                       }
+                   })
+               }
+           }
+                
+
+           ).catch(err=>{console.log(err)})
+            
+       }
     }
 
     render() {
@@ -92,13 +95,13 @@ class ForgotPassword extends Component {
                             <ImageBackground source={backgound} style={{ width: '100%', height: '100%' }}>
                                 <View style={styles.container}>
                                     <Text style={styles.heading}>Forgot Password?</Text>
-                                    <TextInput style={styles.input}
+                                   {/*  <TextInput style={styles.input}
                                         placeholder="email ..."
-                                        value={this.props.email}
-                                        onChangeText={(email) => this.onEmailChanged(email)}
+                                        value={this.state.email}
+                                        onChangeText={(text) => this.setState({ email: text })}
                                         placeholderTextColor="#ddab9c"
-                                    />
-                                    {/* <TextInput style={styles.input}
+                                    /> */}
+                                     <TextInput style={styles.input}
                                         placeholder=" new password ..."
                                         secureTextEntry={true}
                                         placeholderTextColor="#ddab9c"
@@ -106,26 +109,26 @@ class ForgotPassword extends Component {
                                         onChangeText={(text) => this.setState({ newPassword: text })}
                                     />
                                     <TextInput style={styles.input}
-                                        placeholder="confirm password ..."
+                                        placeholder="confirm new password ..."
                                         secureTextEntry={true}
                                         placeholderTextColor="#ddab9c"
                                         value={this.state.confirmPassword}
                                         onChangeText={(text) => this.setState({ confirmPassword: text })}
-                                    /> */}
-                                   {/*  {this.passwordMatch()} */}
+                                    /> 
+                                     {this.passwordMatch()} 
                                     
-                                 { this.props.loading?
+                                    
+                                    
+                                   { this.state.loading?
                                     <SkypeIndicator color={'white'} size={EStyleSheet.value('40rem')} />
                                     :
-                                     
-                                     <TouchableOpacity
+                                    <TouchableOpacity
                                         onPress={() => this.onSubmitPressed()}
                                         style={styles.button}
                                     >
                                         <Text style={styles.buttonText}>Next</Text>
-                                    </TouchableOpacity>}   
-                                    
-                                   
+                                    </TouchableOpacity>
+                                   }
                                 </View>
                             </ImageBackground>
                         </View>
@@ -205,12 +208,10 @@ const styles = EStyleSheet.create({
 const mapStateToProps = state => {
     return {
         email: state.auth.emailForgetPassword,
-       // password: state.auth.password,
-        loading: state.auth.emailFGP_loading,
+      
     };
 };
 
-export default connect(mapStateToProps, actions)(ForgotPassword);
-
+export default connect(mapStateToProps)(ForgotPassword3);
 // TODO
 // connect to the backend

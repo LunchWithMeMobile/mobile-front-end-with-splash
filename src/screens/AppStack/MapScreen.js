@@ -34,6 +34,7 @@ class MapScreen extends Component {
     componentDidMount() {
         Geolocation.getCurrentPosition(
             position => {
+                console.log(position);
                 this.setState({
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude
@@ -62,7 +63,7 @@ class MapScreen extends Component {
     }
 
     async handleSelectedAddress(placeID) {
-        const apiUrl = `https://maps.googleapis.com/maps/api/place/details/json?input=bar&placeid=${placeID}&key=${KEY}`;
+        const apiUrl =`https://maps.googleapis.com/maps/api/place/details/json?input=bar&placeid=${placeID}&key=${KEY}`;
         try {
             const result = await fetch(apiUrl);
             const json = await result.json();
@@ -99,6 +100,7 @@ class MapScreen extends Component {
                         longitudeDelta: 0.0121,
                     }}
                     showsUserLocation={true}
+                    initialRegion={this.state.initialPosition}
                 >
                     <MapView.Marker
                         coordinate={{ latitude: this.state.latitude, longitude: this.state.longitude }}
