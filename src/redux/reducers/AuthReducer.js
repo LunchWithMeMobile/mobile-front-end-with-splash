@@ -14,6 +14,19 @@ import {
     SET_USERNAME,
     SET_ACCESS_TOKEN,
     SET_USER_ID,
+    REGISTRATION2_FNAME_CHANGED,
+    REGISTRATION2_TELEPHONE_CHANGED,
+    REGISTRATION2_GENDER_CHANGED,
+    REGISTRATION2_DOB_CHANGED,
+    REGISTRATION2_DESCRIPTION_CHANGED,
+    REGISTRATION2_PROFESSION_CHANGED,
+    SIGNUP2_FAILED,
+    SIGNUP2_SUCCESS,
+    FORGETPASSWORD_EMAIL_CHANGED,
+    SUBMIT_EMAIL_SUCCESS,
+    SUBMIT_EMAIL_FAIL,
+    SUBMIT_EMAIL,
+
 } from '../types';
 
 const INITIAL_STATE = {
@@ -26,7 +39,9 @@ const INITIAL_STATE = {
     signupUsername: '',
     signupPassword: '',
     signupConfirmPassword: '',
-    signupLoading: false
+    signupLoading: false,
+    emailForgetPassword:'',
+    emailFGP_loading:false,
 };
 
 const LOGIN_INITIAL_STATE = {
@@ -34,6 +49,11 @@ const LOGIN_INITIAL_STATE = {
     password: '',
     loginLoading: false
 };
+
+
+
+
+
 //a function is exported
 export default (state = INITIAL_STATE, action) => {
     console.log(action);
@@ -68,6 +88,14 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, signupLoading: false };
         case SIGNUP_FAILED:
             return { ...state, signupLoading: false };
+        case FORGETPASSWORD_EMAIL_CHANGED:
+             return { ...state, emailForgetPassword: action.payload }; 
+        case SUBMIT_EMAIL_SUCCESS:
+             return { ...state, emailFGP_loading:false };   
+        case SUBMIT_EMAIL_FAIL:
+             return { ...state, emailFGP_loading:false };  
+        case SUBMIT_EMAIL:
+             return { ...state, emailFGP_loading:true };  
         default:
             return state;
     }
