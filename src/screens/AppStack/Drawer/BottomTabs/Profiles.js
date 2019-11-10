@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
     Dimensions,
     View,
-    Text
+    Text,
+    TouchableOpacity
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import CardStack, { Card } from 'react-native-card-stack-swiper';
@@ -41,11 +42,18 @@ class Profiles extends Component {
     }
 
     onSwipeLeft() {
-        console.warn('left');
+        //console.warn('left');
+        alert("liked"); //<Text>liked</Text>
     }
     onSwipeRight() {
-        console.warn('right')
+        //console.warn('right')
     }
+    superlike(){
+        alert("you have super liked ,now you can send a message ");
+        //console.log(this.state.data[index].first);
+        //console.log(index);
+    }
+
     render() {
         return (
             <View style={styles.mainContainer}>
@@ -59,9 +67,17 @@ class Profiles extends Component {
                     {this.state.data.map((item, index) => (
                         <Card key={item} style={[styles.card]}>
                             <Text style={styles.label}>{item.first}</Text>
+                            {/* <Text style={styles.label}>{index}</Text> */}
                             <Text style={styles.label}>{item.last}</Text>
                             <Text style={styles.label}>{item.age}</Text>
+                            <TouchableOpacity
+                                    onPress={()=>this.superlike()}
+                                    style={[styles.button, { backgroundColor: '#c97b63' }]}
+                                >
+                                    <Text style={styles.buttonText} >Superlike</Text>
+                                </TouchableOpacity>
                         </Card>
+
                     ))}
                 </CardStack>
             </View>
@@ -76,6 +92,14 @@ const styles = EStyleSheet.create({
         alignSelf: 'stretch',
         alignItems: 'center',
         backgroundColor: '#a98274'
+    },
+    button: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 120,
+        height: 35,
+        borderRadius: 17,
+        elevation: 5,
     },
     card: {
         alignSelf: 'center',

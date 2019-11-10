@@ -62,34 +62,71 @@ class MapScreen extends Component {
       const lat=latitude.toFixed(4)
       const lon=longitude.toFixed(4)
       
-    console.log(lat,lon,valu1,valu2)
-    fetch(MAPTIME, {
+    console.log(lat,lon,valu1,valu2);
+    return fetch(MAPTIME, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            
+        body:JSON.stringify({
             pickupLng: lon,
             pickupLat: lat,
             value1:valu1,
             value2:valu2,
             email:'yasuriratnayake@gmail.com'
         })
-    }).then(response => {
-        console.log(response);
-        if (response.ok) {
-            return response.json()
-                .then(resJson => {
-                    console.log(resJson);
-                    if (resJson.success) {
-                        alert("location updated successfully ");
-                        this.props.navigation.navigate('test')
-                    } else {
-                        
-                       alert("failed update");
-                    }
+    }).then(response => {console.log(response)
+        if(response.ok){
+          return response.json()
+            .then(resJson => {
+                console.log(resJson)
+                
+                //console.log('not okayyy')
+              //if(resJson.success) {
+                if (response.ok) {
+                console.log('okayyyy');
+                this.storeData();
+                // AsyncStorage.setItem('id',resJson.id);
+                // AsyncStorage.setItem('token',resJson.token);
+                this.props.navigation.navigate('Profiles')
+              } else {
+                alert(
+                  ("jhsbjhabsc")
+                );
+              }
+            })
+        } else(response => {
+          console.log(response);
+         
+        })
+      });
+    }
+        
+         
+      
+    
+        async onChangeDestination(destination) {
+            //console.log(destination);
+            this.setState({ destination });
+            //console.log(this.state.latitude)
+            //console.log(this.state.longitude)
+            const apiUrl = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${KEY}&components=country:lk&types=(cities)&&input=${destination}&location=${this.state.latitude},${this.state.longitude}`;
+            try {
+                const result = await fetch(apiUrl);
+                const json = await result.json();
+                //console.log(json);
+                this.setState({
+                    predictions: json.predictions
                 });
+            } catch (e) {
+                console.log(e);
+            }
+        }
+  /*       console.log(response);
+        if (response.ok) {
+            console.log(response.json()); 
+             alert("success");       
+                
         } else {
            
             alert(
@@ -107,29 +144,9 @@ class MapScreen extends Component {
             'request eke awulak',
             
         );
-    });
+    }); */
 
     
-     }
-  
-
-    async onChangeDestination(destination) {
-        //console.log(destination);
-        this.setState({ destination });
-        //console.log(this.state.latitude)
-        //console.log(this.state.longitude)
-        const apiUrl = `https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${KEY}&components=country:lk&types=(cities)&&input=${destination}&location=${this.state.latitude},${this.state.longitude}`;
-        try {
-            const result = await fetch(apiUrl);
-            const json = await result.json();
-            //console.log(json);
-            this.setState({
-                predictions: json.predictions
-            });
-        } catch (e) {
-            console.log(e);
-        }
-    }
 
     async handleSelectedAddress(placeID) {
         const apiUrl =`https://maps.googleapis.com/maps/api/place/details/json?input=bar&placeid=${placeID}&key=${KEY}`;
