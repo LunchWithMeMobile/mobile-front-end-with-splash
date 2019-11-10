@@ -54,5 +54,7 @@ export const SUBMIT_EMAIL_SUCCESS="submit_email_success";
 
 export const SUBMIT_EMAIL_FAIL="submit_email_fail";
 
+//chat
+export const GET_CHAT_USER = 'get_chat_user';
 
 

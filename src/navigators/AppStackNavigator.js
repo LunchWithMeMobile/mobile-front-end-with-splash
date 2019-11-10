@@ -4,6 +4,7 @@ import { DrawerNavigator } from '../navigators/DrawerNavigator';
 import { ChatStackNavigator } from '../navigators/ChatStackNavigator';
 import MapScreen from '../screens/AppStack/MapScreen';
 import TimePickerScreen from '../screens/AppStack/TimePickerScreen';
+import test from '../screens/AppStack/test';
 import { HeaderRight } from '../components/HeaderRight';
 
 export const AppStackNavigator = createStackNavigator(
@@ -27,6 +28,9 @@ export const AppStackNavigator = createStackNavigator(
 
             screen:TimePickerScreen,
         },
+        test:{
+            screen:test,
+        }
 
         
     },

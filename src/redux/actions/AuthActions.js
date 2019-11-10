@@ -75,7 +75,14 @@ export const loginUser = (username, password, isChecked) => {
                                 AsyncStorage.setItem('userId', resJson.user.id);
                                 AsyncStorage.setItem('userName', resJson.user.username);
                             }
-                            NavigationService.navigate('App');
+                            Alert.alert(
+                                'Login successful!',
+                                resJson.msg,
+                                [
+                                    { text: 'Ok' },
+                                ],
+                            );
+                            NavigationService.navigate('TimePickerScreen');
                         } else {
                             dispatch({ type: LOGIN_FAILED });
                             Alert.alert(

@@ -4,6 +4,7 @@ import Login from '../screens/AuthStack/Login';
 import Signup from '../screens/AuthStack/Signup';
 import Signup2 from '../screens/AuthStack/Signup2';
 import PreferenceSelect from '../screens/AuthStack/PreferenceSelect';
+import PreferenceSelect1 from '../screens/AuthStack/PreferenceSelect1';
 import ForgotPassword from '../screens/AuthStack/ForgotPassword';
 import ForgotPassword2 from '../screens/AuthStack/ForgotPassword2';
 import ForgotPassword3 from '../screens/AuthStack/ForgotPassword3';
@@ -51,6 +52,15 @@ export const AuthStackNavigator = createStackNavigator(
                 header: null
             }
         },
+        PreferenceSelect1: {
+            screen: PreferenceSelect1,
+            headerMode: 'none',
+            header: null,
+            navigationOptions: {
+                header: null
+            }
+        },
+
         ForgotPassword: {
             screen: ForgotPassword,
             headerMode: 'none',

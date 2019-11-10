@@ -75,7 +75,7 @@ const styles = EStyleSheet.create({
         justifyContent: 'center',
         alignSelf: 'stretch',
         alignItems: 'center',
-        backgroundColor: 'yellow'
+        backgroundColor: '#a98274'
     },
     card: {
         alignSelf: 'center',
