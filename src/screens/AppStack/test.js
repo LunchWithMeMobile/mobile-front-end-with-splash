@@ -18,16 +18,21 @@ class test extends Component {
      constructor(props) {
         super(props);
         this.state = {
-          
+        valu1:this.props.navigation.getParam('val1', 'NO-ID'),
+        valu2:this.props.navigation.getParam('val2', 'NO-ID')
+
         };
     } 
     render() {
+        const { navigation } = this.props;
         return (
             <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
               <Text>test sreen </Text>
               <Text>
-                  
-          
+                  {this.state.valu1}
+        </Text>
+        <Text>
+                  {this.state.valu2}
         </Text>
                   
             </View>

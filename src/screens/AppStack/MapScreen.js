@@ -30,10 +30,12 @@ class MapScreen extends Component {
         super(props);
         this.state = {
             error: "",
-            latitude: 6.7970862,//Initial Longitude
-            longitude: 79.9019094,//Initial Latitude
+            latitude: 6.7970,//Initial Longitude
+            longitude: 79.9019,//Initial Latitude
             destination: "",
             predictions: [],
+            valu1:this.props.navigation.getParam('val1', 'NO-ID'),
+            valu2:this.props.navigation.getParam('val2', 'NO-ID')
             
         };
 
@@ -43,7 +45,7 @@ class MapScreen extends Component {
         Geolocation.getCurrentPosition(
             position => {
                 /* console.log(position); */
-                console.log('position->',position);
+                //console.log('position->',position);
                 this.setState({
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude
@@ -56,18 +58,23 @@ class MapScreen extends Component {
 
     }
    sendcoor(){
-      const {latitude,longitude}=this.state  
-    console.log(latitude,longitude)
-    /* fetch(MAPTIME, {
+      const {latitude,longitude,valu1,valu2}=this.state  
+      const lat=latitude.toFixed(4)
+      const lon=longitude.toFixed(4)
+      
+    console.log(lat,lon,valu1,valu2)
+    fetch(MAPTIME, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
             
-            pickupLng: longitude,
-            pickupLat: latitude,
-            email:'m@gmail.com'
+            pickupLng: lon,
+            pickupLat: lat,
+            value1:valu1,
+            value2:valu2,
+            email:'yasuriratnayake@gmail.com'
         })
     }).then(response => {
         console.log(response);
@@ -77,7 +84,7 @@ class MapScreen extends Component {
                     console.log(resJson);
                     if (resJson.success) {
                         alert("location updated successfully ");
-                        this.props.navigation.navigate('Profiles')
+                        this.props.navigation.navigate('test')
                     } else {
                         
                        alert("failed update");
@@ -102,8 +109,7 @@ class MapScreen extends Component {
         );
     });
 
-     */
-    this.props.navigation.navigate('Profiles');
+    
      }
   
 
@@ -130,7 +136,7 @@ class MapScreen extends Component {
         try {
             const result = await fetch(apiUrl);
             const json = await result.json();
-            console.log(json.result.formatted_address);
+            //console.log(json.result.formatted_address);
             
             this.setState({
                 latitude: json.result.geometry.location.lat,

@@ -67,8 +67,9 @@ class TimePickerScreen extends Component {
         
         console.log("time is "+tmp2);
         console.log("time is "+tmp);
+        this.props.navigation.navigate('MapScreen',{val1:tmp,val2:tmp2})
         
-        /* fetch(MAPTIME, {
+      /*   fetch(MAPTIME, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -111,10 +112,10 @@ class TimePickerScreen extends Component {
                 
             );
         });
-    
-         */
+     */
+        
 
- this.props.navigation.navigate('MapScreen');
+ //this.props.navigation.navigate('MapScreen');
     }
 
     render() {
