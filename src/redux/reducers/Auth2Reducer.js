@@ -1,6 +1,5 @@
 import {
     REGISTRATION2_FNAME_CHANGED,
-    REGISTRATION2_TELEPHONE_CHANGED,
     REGISTRATION2_GENDER_CHANGED,
     REGISTRATION2_DOB_CHANGED,
     REGISTRATION2_DESCRIPTION_CHANGED,
@@ -14,7 +13,6 @@ import {
 
 const  INITIAL_STATE={
     fname:'',
-    telephone:'',
     gender:'',
     dob:'',
     description:'',
@@ -29,9 +27,6 @@ export default (state=INITIAL_STATE,action)=>{
 
         case  REGISTRATION2_FNAME_CHANGED:
             return {...state, fname:action.payload};
-           
-        case   REGISTRATION2_TELEPHONE_CHANGED:
-            return {...state, telephone:action.payload};
         case REGISTRATION2_GENDER_CHANGED:
             return {... state, gender:action.payload};
         case REGISTRATION2_DOB_CHANGED:

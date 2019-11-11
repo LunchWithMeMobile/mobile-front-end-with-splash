@@ -47,10 +47,10 @@ class Signup2 extends Component {
     onFullnameChanged(value) {
         this.props.RFullnameChanged(value);
     }
-
+/* 
     onTelephoneChanged(value) {
         this.props.RTelephoneChanged(value);
-    }
+    } */
 
     onDOBChanged(value) {
         this.props.RDOBChanged(value);
@@ -109,13 +109,19 @@ class Signup2 extends Component {
                             <Text style={styles.txtH}>Create Account</Text>
                             <Text style={styles.txt}>Full Name*</Text>
                             <TextInput
-                                style={styles.txt2}
+                                style={styles.input}
                                 placeholder="Enter Full Name"
                                 value={this.state.fname}
    
                                 onChangeText={text => this.onFullnameChanged(text)}
-                                placeholderTextColor="#D5AFAF"
+                                placeholderTextColor="#ddab9c"
                             />
+                            {/* <TextInput style={styles.input}
+                                        placeholder="email ..."
+                                        value={this.props.email}
+                                        onChangeText={(email) => this.onEmailChanged(email)}
+                                        placeholderTextColor="#ddab9c"
+                                    /> */}
                             <Text style={styles.txt}>Gender*</Text>
                             <RadioForm
                                 radio_props={gender}
@@ -161,15 +167,7 @@ class Signup2 extends Component {
                                 onChangeText={text => this.onDescriptionChanged(text)}
                                 placeholderTextColor="#D5AFAF"
                             />
-                            <Text style={styles.txt}>Mobile Number* </Text>
-                            <TextInput style={styles.txt2}
-                                //style={styles.input}
-                                placeholder="Mobile Number"
-                                //secureTextEntry={true}
-                                value={this.state.telephone}
-                                onChangeText={text => this.onTelephoneChanged(text) }
-                                placeholderTextColor="#D5AFAF"
-                            />
+                         
                             <Text style={styles.txt}>Select Your Occupation*</Text>
                             <Picker
                                 //selectedValue={this.state.profession}
@@ -226,6 +224,15 @@ const styles = EStyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    container: {
+        width: '100%',
+        height: '100%',
+        backgroundColor: "rgba(30,14,4,0.7)",
+        alignItems: 'center',
+        justifyContent: "center",
+        elevation: 3,
+        alignSelf: 'center',
+    },
     signInB: {
         backgroundColor: '#c97b63',
         width: '120rem',
@@ -236,6 +243,21 @@ const styles = EStyleSheet.create({
         marginTop: '10rem',
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    input: {
+        //borderColor:'#0000dd',
+        //backgroundColor:'rgba(240,208,193,0.35)' ,
+        height: '40rem',
+        width: "80%",
+        marginBottom: '30rem',
+        marginTop: '10rem',
+        color: '#000000',
+        borderRadius: '20rem',
+        paddingLeft: '20rem',
+        color: '#ffffff',
+        borderColor: '#c97b63',
+        borderStyle: 'solid',
+        borderWidth: '1.5rem',
     },
     txtH: {
         color: "#fffffb",

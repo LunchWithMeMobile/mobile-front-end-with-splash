@@ -80,20 +80,20 @@ class MapScreen extends Component {
           return response.json()
             .then(resJson => {
                 console.log(resJson)
-                
+                this.props.navigation.navigate('Profiles')
                 //console.log('not okayyy')
               //if(resJson.success) {
-                if (response.ok) {
+                /* if (response.ok) {
                 console.log('okayyyy');
-                this.storeData();
+                //this.storeData();
                 // AsyncStorage.setItem('id',resJson.id);
                 // AsyncStorage.setItem('token',resJson.token);
                 this.props.navigation.navigate('Profiles')
-              } else {
+              } */ /* else {
                 alert(
                   ("jhsbjhabsc")
                 );
-              }
+              } */
             })
         } else(response => {
           console.log(response);
@@ -153,7 +153,7 @@ class MapScreen extends Component {
         try {
             const result = await fetch(apiUrl);
             const json = await result.json();
-            //console.log(json.result.formatted_address);
+            console.log(json.result.formatted_address);
             
             this.setState({
                 latitude: json.result.geometry.location.lat,

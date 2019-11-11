@@ -114,24 +114,7 @@ class Login extends Component {
                                         <Text style={styles.buttonText} >Log in</Text>
                                     </TouchableOpacity>
                             }
-                            <Text style={{ color: "#ffffff", marginTop: 40, }}>or Log in with</Text>
-                            <View style={styles.apiLogIn}>
-                                <View style={styles.buttonContainer}>
-                                    <TouchableOpacity
-                                        style={[styles.buttonSocialMd, { backgroundColor: '#3b5998', }]}
-                                        onPress={_ => this._fbAuth()}>
-                                        <Text style={styles.buttonText} ></Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={styles.buttonContainer}>
-                                    <TouchableOpacity
-                                        style={[styles.buttonSocialMd, { backgroundColor: '#0e76a8', }]}
-                                        onPress={this.onPress}
-                                    >
-                                        <Text style={styles.buttonText} ></Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
+                            
                         </View>
                         <View style={styles.newAccount}>
                             <Text style={{ color: '#fffffb' }}>Don't have an account?</Text>

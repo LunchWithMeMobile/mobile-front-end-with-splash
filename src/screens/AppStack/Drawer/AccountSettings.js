@@ -63,11 +63,11 @@ class AccountSettings extends Component {
         return (
             <View style={styles.MainContainer}>
           <View style={styles1.contentBox}>
-          <Text style={styles1.heading}>Turn on Notification</Text>
+          <Text style={styles1.heading}>Hide Details</Text>
           
           <View style={{flexDirection:'row'}}>
           <View style={{padding:10}}>
-          <Text style={{marginTop:18}}>For Messages</Text>
+          <Text style={{marginTop:18}}>Birthday     </Text>
           </View>
           <View style={{flex:1,alignItems:'center',justifyContent:'center',marginLeft:'45%',marginRight:10}}>
               <SwitchToggle
@@ -103,7 +103,7 @@ class AccountSettings extends Component {
               
               <View style={{flexDirection:'row'}}>
           <View style={{padding:10}}>
-          <Text style={{marginTop:18}}>For likes              </Text>
+          <Text style={{marginTop:18}}>Gender                  </Text>
           </View>
           <View style={{flex:1,alignItems:'center',justifyContent:'center',marginLeft:'35%',marginRight:10}}>
               <SwitchToggle
@@ -132,68 +132,6 @@ class AccountSettings extends Component {
         </View>
         </View>
         
-
-            <View style={{flexDirection:'row'}}>
-          <View style={{padding:10}}>
-          <Text style={{marginTop:18}}>For superlikes  </Text>
-          </View>
-          <View style={{flex:1,alignItems:'center',justifyContent:'center',marginLeft:'35%',marginRight:10}}>
-              <SwitchToggle
-          containerStyle={{
-            marginTop: 16,
-            width: 60,
-            height: 25,
-            borderRadius: 12,
-            backgroundColor: '#ccc',
-            padding: 5,
-          }}
-          circleStyle={{
-            width: 25,
-            height: 25,
-            borderRadius: 16,
-            backgroundColor: 'white', // rgb(102,134,205)
-            elevation:4,
-          }}
-          switchOn={this.state.switchOn5}
-          onPress={this.onPress5}
-          circleColorOff='white'
-          backgroundColorOn='#ffe0b2'
-          circleColorOn='#ff7043'
-          duration={500}
-        />
-        </View>
-        </View>
-
-              <View style={{flexDirection:'row'}}>
-          <View style={{padding:10}}>
-          <Text style={{marginTop:18}}>Hide Occupation</Text>
-          </View>
-          <View style={{flex:1,alignItems:'center',justifyContent:'center',marginLeft:'40%',marginRight:10}}>
-              <SwitchToggle
-          containerStyle={{
-            marginTop: 16,
-            width: 60,
-            height: 25,
-            borderRadius: 12,
-            backgroundColor: '#ccc',
-            padding: 5,
-          }}
-          circleStyle={{
-            width: 25,
-            height: 25,
-            borderRadius: 16,
-            backgroundColor: 'white', // rgb(102,134,205)
-            elevation:4,
-          }}
-          switchOn={this.state.switchOn6}
-          onPress={this.onPress6}
-          circleColorOff='white'
-          backgroundColorOn='#ffe0b2'
-          circleColorOn='#ff7043'
-          duration={500}
-        />
-        </View>
-        </View>
 
 
 
@@ -231,9 +169,7 @@ class AccountSettings extends Component {
        
        
         </View>
-        <View style={styles1.contentBox1}>
-
-        </View>
+        
       </View>
         );
     }
@@ -244,7 +180,7 @@ const styles1=StyleSheet.create({
           backgroundColor:'#e6ded4',
     },
     contentBox:{
-      width:'80%',
+      width:'90%',
       margin:'10%',
       height:'70%',
       backgroundColor:'#feeff4',

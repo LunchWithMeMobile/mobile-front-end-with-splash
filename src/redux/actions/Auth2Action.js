@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-community/async-storage';
  
 import {
     REGISTRATION2_FNAME_CHANGED,
-    REGISTRATION2_TELEPHONE_CHANGED,
+    
     REGISTRATION2_GENDER_CHANGED,
     REGISTRATION2_DOB_CHANGED,
     REGISTRATION2_DESCRIPTION_CHANGED,
@@ -48,7 +48,7 @@ export const InterestedProfessionChanged=(Inprof)=>{
 };
 
 
-export const RTelephoneChanged=(telephone)=>{
+/* export const RTelephoneChanged=(telephone)=>{
     return {
 
         type:REGISTRATION2_TELEPHONE_CHANGED,
@@ -56,7 +56,7 @@ export const RTelephoneChanged=(telephone)=>{
     };
 
 };
-
+ */
 
 export const RGenderChanged=(gender)=>{
     return{
@@ -108,7 +108,7 @@ export const RDetails = (fullname,gender,dob,description,telephone,profession,em
                 gender:gender,
                 
                 self_description: description,
-                telephone:telephone,
+                
                 myProf:profession,
                 intProf:intProf,
                 email:email,
