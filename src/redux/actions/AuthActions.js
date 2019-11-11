@@ -126,8 +126,22 @@ export const setUserDetails = (accessToken, userId, username) => {
         setUsername(username, dispatch);
     };
 }
-
 const setUsername = (username, dispatch) => {
+    AsyncStorage.setItem('USERNAME', username);
+    dispatch({ type: SET_USERNAME, payload: username });
+};
+
+const setAccessToken = (accessToken, dispatch) => {
+    AsyncStorage.setItem('logToken', accessToken);
+    dispatch({ type: SET_ACCESS_TOKEN, payload: accessToken });
+};
+
+const setUserId = (userId, dispatch) => {
+    AsyncStorage.setItem('USER_ID', userId);
+    dispatch({ type: SET_USER_ID, payload: userId });
+};
+
+/* const setUsername = (username, dispatch) => {
     dispatch({ type: SET_USERNAME, payload: username });
 };
 
@@ -138,7 +152,7 @@ const setAccessToken = (accessToken, dispatch) => {
 const setUserId = (userId, dispatch) => {
     dispatch({ type: SET_USER_ID, payload: userId });
 };
-
+ */
 
 //signup actions------------------------------------------------
 export const signupEmailChanged = (email) => {

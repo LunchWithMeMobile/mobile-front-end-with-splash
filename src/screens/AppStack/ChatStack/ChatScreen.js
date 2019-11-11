@@ -24,9 +24,14 @@ class ChatScreen extends Component {
         super(props);
         this.state = {
           messages: [],
-          user_name: null,
-          personId:this.props.navigation.getParam('value', 'NO-ID')//click user's data
+          conversationId:'',
+          user_name: this.props.navigation.getParam('logUser', 'logUser'),
+          personId:this.props.navigation.getParam('value', 'NO-ID'),//click user's data
+          list: [
+
+          ],
         };
+        this.onReceivedMessageFromDB = this.onReceivedMessageFromDB.bind(this);
         this.onReceivedMessage = this.onReceivedMessage.bind(this);
         this.onSend = this.onSend.bind(this);
         this._storeMessages = this._storeMessages.bind(this);
@@ -40,6 +45,7 @@ class ChatScreen extends Component {
             transports: ['websocket']
          });
         this.socket.on('message', this.onReceivedMessage);
+        
 
     }
     componentDidMount() {
@@ -49,11 +55,11 @@ class ChatScreen extends Component {
         console.log('====================================');
       });
 
-      AsyncStorage.getItem('USERNAME').then(name => {
-        this.setState({
-            user_name: name
-        });
-      });
+      // AsyncStorage.getItem('USERNAME').then(name => {
+      //   this.setState({
+      //       user_name: name
+      //   });
+      // });
   
       this.socket.on("connect", () => {
         this.sendUser(this.state.user_name);
@@ -87,25 +93,55 @@ class ChatScreen extends Component {
                 })
                 .then((response) => response.json())
                 .then((responseJson) => {
-                    console.log('response object:',responseJson.conversation);
-                    //this.onReceivedMessage(responseJson.conversation);
+                  //alert(JSON.stringify(responseJson.conversation.messages));
+                  this.onReceivedMessageFromDB(responseJson.conversation.messages);
+                  this.setState({
+                    conversationId:responseJson.conversation._doc._id,
+                });
+                    //console.log('response object:',responseJson.conversation);
+                    //this.onReceivedMessage(responseJson.conversation.messages);
                 })
                 .catch((error) => {
                   console.error(error);
                 });
         });
     }
+    onReceivedMessageFromDB(messages) {
+        //alert(JSON.stringify(messages));
+        for (let amount of messages.values()) {
+          
+            let list={
+              "_id":amount._id,
+              "text":amount.text,
+              "User":{username:amount.from },
+              "createdAt":amount.created,
+              "chatId":amount.conversationId
+
+            };
+            this.setState({list:[...this.state.list,list]});
+        
+        }
+        this._storeMessages(this.state.list);
+    }
     onReceivedMessage(messages) {
-        this._storeMessages(messages);
+      //alert(JSON.stringify(messages));
+      let list={
+        "text":messages.text,
+        "User":{username:messages.from },
+        "createdAt":messages.created,
+        "chatId":messages.conversationId
+
+      };
+      this._storeMessages(list);
     }
     //
     onSend(messages=[]) {
-        //alert(messages[0].text);
+        //alert(JSON.stringify(messages));
         let message = {
           text: messages[0].text,
           from: messages[0].user.username,
           created: new Date(messages[0].createdAt),
-          conversationId: '5da9f6da13f0623f801cee7a',
+          conversationId: this.state.conversationId,
           inChatRoom:"chat-room"
           
         };
@@ -118,12 +154,14 @@ class ChatScreen extends Component {
             messages: GiftedChat.append(previousState.messages, messages),
           };
         });
+        
     }
 
     render() {
         var user = { username: this.state.user_name};
         return (
         <GiftedChat
+            inverted={false}
             messages={this.state.messages}
             onSend={this.onSend}
             user={user}

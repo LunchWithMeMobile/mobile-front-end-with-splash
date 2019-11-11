@@ -25,6 +25,7 @@ class ChatListScreen extends Component {
         super();
         this.state={
             chatList:[],
+            logUser:''
         }
     }
 
@@ -38,23 +39,26 @@ class ChatListScreen extends Component {
         alert(storedToken);*/
         AsyncStorage.getItem('logToken').then(logToken => {
             //alert(accessToken);
-            fetch(CHAT_LIST, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': logToken
-                },
-                })
-                .then((response) => response.json())
-                .then((responseJson) => {
-                    this.setState({
-                        chatList: responseJson.users
+            AsyncStorage.getItem('USERNAME').then(USERNAME => {
+                fetch(CHAT_LIST, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': logToken
+                    },
+                    })
+                    .then((response) => response.json())
+                    .then((responseJson) => {
+                        this.setState({
+                            chatList: responseJson.users,
+                            logUser:USERNAME
+                        });
+                        //console.log('response object:',responseJson.users)
+                    })
+                    .catch((error) => {
+                    console.error(error);
                     });
-                    //console.log('response object:',responseJson.users)
-                })
-                .catch((error) => {
-                  console.error(error);
-                });
+            });
         });
         
     }
@@ -64,7 +68,7 @@ class ChatListScreen extends Component {
     renderItem = ({ item }) => (
         <TouchableOpacity
                 key={item._id}
-                onPress={() => this.props.navigation.navigate('ChatScreen',{value:item})}
+                onPress={() => this.props.navigation.navigate('ChatScreen',{value:item,logUser:this.state.logUser})}
             >
             <ListItem
                 title={item.username}

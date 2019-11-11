@@ -57,53 +57,51 @@ class MapScreen extends Component {
         );
 
     }
-   sendcoor(){
-      const {latitude,longitude,valu1,valu2}=this.state  
-      const lat=latitude.toFixed(4)
-      const lon=longitude.toFixed(4)
-      
-    console.log(lat,lon,valu1,valu2);
-    return fetch(MAPTIME, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body:JSON.stringify({
-            pickupLng: lon,
-            pickupLat: lat,
-            value1:valu1,
-            value2:valu2,
-            email:'yasuriratnayake@gmail.com'
-        })
-    }).then(response => {console.log(response)
-        if(response.ok){
-          return response.json()
-            .then(resJson => {
-                console.log(resJson)
-                this.props.navigation.navigate('Profiles')
-                //console.log('not okayyy')
-              //if(resJson.success) {
-                /* if (response.ok) {
-                console.log('okayyyy');
-                //this.storeData();
-                // AsyncStorage.setItem('id',resJson.id);
-                // AsyncStorage.setItem('token',resJson.token);
-                this.props.navigation.navigate('Profiles')
-              } */ /* else {
-                alert(
-                  ("jhsbjhabsc")
-                );
-              } */
-            })
-        } else(response => {
-          console.log(response);
-         
-        })
-      });
-    }
+    sendcoor(){
+        const {latitude,longitude,valu1,valu2}=this.state  
+        const lat=latitude.toFixed(4)
+        const lon=longitude.toFixed(4)
         
-         
+      console.log(lat,lon,valu1,valu2)
+      fetch(MAPTIME, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              
+              pickupLng: lon,
+              pickupLat: lat,
+              timeF:valu1,
+              timeT:valu2,
+              email:'yasuriratnayake@gmail.com'
+          })
+      }).then(response => {
+          console.log(response);
+          if (response.ok) {
+              alert("location updated")
+            this.props.navigation.navigate('Profiles')
+          } else {
+             
+              alert(
+                  'map Failed!'
+                  
+                 
+              );
+          }
+      }).catch(err => {
+          console.log(err);
+          //NavigationService.navigate('Signup2');
+          
+          alert(
+             
+              'network request failed',
+              
+          );
+      });
+  
       
+       }
     
         async onChangeDestination(destination) {
             //console.log(destination);

@@ -7,6 +7,6 @@ export const SIGNUP = `${PROTOCOL}${HOST}/users/register`;
 export const SIGNUP2=`${PROTOCOL}${HOST}/users/registerdetails`;
 export const FORGOTPASSWORD1=`${PROTOCOL}${HOST}/users/MforgotpasswordEmailVerification`;
 export const FORGOTPASSWORD3=`${PROTOCOL}${HOST}/users/forgotPassword`;
-export const CHAT_LIST = `${PROTOCOL}${HOST}/users/userList`;
+export const CHAT_LIST = `${PROTOCOL}${HOST}/users/muserList`;
 export const MESSAGE = `${PROTOCOL}${HOST}/messages`;
 export const MAPTIME = `${PROTOCOL}${HOST}/users/meet`;
