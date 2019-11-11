@@ -76,6 +76,12 @@ class Profiles extends Component {
                                 >
                                     <Text style={styles.buttonText} >Superlike</Text>
                                 </TouchableOpacity>
+                                <TouchableOpacity
+                                    //onPress={()=>this.superlike()}
+                                    style={[styles.button, { backgroundColor: '#c97b63' }]}
+                                >
+                                    <Text style={styles.buttonText} >view profile</Text>
+                                </TouchableOpacity>
                         </Card>
 
                     ))}
@@ -100,6 +106,13 @@ const styles = EStyleSheet.create({
         height: 35,
         borderRadius: 17,
         elevation: 5,
+        paddingTop:15
+    },
+    buttonText: {
+        alignSelf: 'center',
+        color: '#ffffff',
+        fontWeight: "900",
+        fontSize: '15rem',
     },
     card: {
         alignSelf: 'center',
