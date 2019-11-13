@@ -8,13 +8,20 @@ import {
     Image,
     ScrollView,
     TextInput,
+    AsyncStorage,
     Picker,
 } from 'react-native';
+
 import EStyleSheet from 'react-native-extended-stylesheet';
 import DatePicker from 'react-native-datepicker';
+import { connect } from 'react-redux';
 import moment from 'moment';
 //import RadioForm from 'react-native-simple-radio-button';
 
+
+import {
+MYPROFILE
+} from '../../../api/API';
 import profile1 from '../../../assests/Images/profiles1.jpg';
 import unlock2 from '../../../assests/Images/unlock2.png';
 import cam2 from '../../../assests/Images/cam2.png';
@@ -30,7 +37,7 @@ class ProfileSettings extends Component {
         this.state = {
             DOB:'17-11-1997',//moment().format('DD-MM-YYYY'),
             //EditDOB:false,
-            fullName: 'Yasuri Ratnayake',
+            fullName: '',
             username:'yasuriiii',
             //EditFullName:false,
             Address:'Kandy',
@@ -41,7 +48,9 @@ class ProfileSettings extends Component {
            // Telephone: '',
            // EditTelephone:false,
             profession: 'Student',
-            Email:'yasuriratnayake@gmail.com'
+            Email:'yasuriratnayake@gmail.com',
+            user: {}
+           
         }
     }
 
@@ -50,7 +59,67 @@ class ProfileSettings extends Component {
 
     } */
 
+
+    APICall(userId) {
+      const {fullName}=this.state;
+      // console.log(userId);
+      // console.log("apicall");
+      
+       fetch(`${MYPROFILE}/${userId}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Authorization': 'Bearer '+accessToken, 
+        },
+    }).then(response => {
+      console.log(response);
+        if (response.ok) {
+            return response.json()
+            .then(resJson => {
+                console.log(resJson);
+                this.setState({ user:resJson});  
+               // fullName=resJson.fullname;
+                // console.log(this.state.fullName);
+               // console.log("response"+response)
+            })
+        } else {
+            console.log("error with resJson");
+        }
+    }).catch(error => {
+        console.log(error);
+    }) 
+
+
+         
+    
+  }
+    componentDidMount(){
+      const { selectedUser } = this.props;
+      if(Object.keys(selectedUser).length === 0 && selectedUser.constructor === Object) {
+          AsyncStorage.getItem('accessToken').then(accessToken => {
+            AsyncStorage.getItem('userId').then(userId => {
+                this.APICall(userId);
+            });
+        });
+      } else {
+        this.setState({user: selectedUser});
+      }
+      
+      
+/* AsyncStorage.getItem('userId').then(userId => {
+  //this.props.getLikesList(accessToken, userId);
+  //getLikesList is defined in AuthAction
+  alert(userId);
+  this.APICall(userId);
+}); */
+  }
+
+
+
     render() {
+      //this.state.user.date_of_birth.toString().slice(0,10)
+      const dob=JSON.stringify(this.state.user.date_of_birth)
+        //const  doadb devicesb2=dob.slice(2,5);
         return (
             <View style={styles.MainContainer}>
       
@@ -74,7 +143,7 @@ class ProfileSettings extends Component {
               
             
             <View style={styles.heading}>
-             <Text style={styles.headingText}>{this.state.username}</Text>
+             <Text style={styles.headingText}>{this.state.user.username}</Text>
             
             </View>
              
@@ -85,11 +154,11 @@ class ProfileSettings extends Component {
   
      <Text styles={styles.bio}>Personal Details</Text>
      <View>
-       <Text>Full Name:</Text>
+       <Text>fullName:</Text>
        <View style={{flexDirection:'row'}}> 
        <View>
        <Text>
-          {this.state.fullName}
+          {this.state.user.fullname}
          {/*  //editable={this.state.EditFullName}
           //onChangeText={text => this.onFullnameChanged(text)}
           //onChangeText={(fullName)=>this.setState({fullName})} */}
@@ -100,6 +169,7 @@ class ProfileSettings extends Component {
        </View> 
        
        <Text>Date of Birth:</Text>
+       <Text>{this.state.user.date_of_birth}</Text>
        <View style={{flexDirection:'row'}}> 
        <View>
 
@@ -110,14 +180,10 @@ class ProfileSettings extends Component {
        
        
 
-       <Text>Address:</Text>
+       <Text>Gender:</Text>
       <View style={{flexDirection:'row'}}> 
        <View> 
-      <Text>
-         {this.state.Address}
-         {/*  //editable={this.state.EditAddress}
-          //onChangeText={(Address)=>this.setState({Address})} */}
-          </Text>
+      <Text>{this.state.user.gender}</Text>
       </View>
       
        </View> 
@@ -127,7 +193,7 @@ class ProfileSettings extends Component {
       <View style={{flexDirection:'row'}}> 
        <View> 
       <Text>
-         {this.state.Email}
+         {this.state.user.email}
         {/*  //editable={this.state.EditEmail}
         //onChangeText={(Email)=>this.setState({Email})} */}
         </Text>
@@ -140,7 +206,7 @@ class ProfileSettings extends Component {
       <View style={{flexDirection:'row'}}> 
        <View> 
       <Text>
-         {this.state.profession}
+         {this.state.user.myProf}
         {/*  //editable={this.state.EditEmail}
         //onChangeText={(Email)=>this.setState({Email})} */}
         </Text>
@@ -300,4 +366,10 @@ const styles = EStyleSheet.create({
       },
 });
 
-export default ProfileSettings;
+const mapStateToProps = state => {
+  return {
+    selectedUser: state.app.selectedUser,
+  };
+};
+
+export default connect(mapStateToProps, null)(ProfileSettings);

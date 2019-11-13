@@ -41,7 +41,7 @@ class Login extends Component {
     }
 
     onChecked(value) {
-        this.setState({ isChecked: value });
+        this.setState({ isChecked: !value });
     }
 
     onLoginPressed = () => {
@@ -88,7 +88,7 @@ class Login extends Component {
                             <View style={styles.check}>
                                 <CheckBox
                                     label={'Remember me'}
-                                    checked={this.state.isCheckedrue}
+                                    checked={this.state.isChecked}
                                     onChange={(value) => this.onChecked(value)}
                                     checkboxStyle={{
                                         width: EStyleSheet.value('15rem'),

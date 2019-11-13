@@ -25,7 +25,8 @@ export default class ListItem extends React.Component{
  
   
   render(){
-    const {username,fullname,occupation, image}=this.props;
+    const {username,fullname,occupation, image, onPress}=this.props;
+    console.log(image)
     return(
         <View >
    
@@ -36,17 +37,17 @@ export default class ListItem extends React.Component{
             source={avatar}
             resizeMode={'cover'}
           />
-         
+          
           <View style={styles.info}> 
           <TouchableOpacity >
           <Text style={styles.heading}>{username}</Text>
-          <Text style={styles.para}>{fullname}</Text>
+          {/* <Text style={styles.para}>{fullname}</Text> */}
           
-          <Text style={styles.para}>{occupation}</Text>
+          {/* <Text style={styles.para}>{occupation}</Text> */}
           </TouchableOpacity>
           </View>
           <View style={styles.like}>
-          <TouchableOpacity style={styles.icon}>
+          <TouchableOpacity style={styles.icon} onPress={onPress}>
           <View style={styles.icon}><Icon name="gratipay" size={40} color="#c97b63"  /></View>
           </TouchableOpacity>
           </View>
@@ -140,6 +141,7 @@ const styles = StyleSheet.create({
                 padding:1,
                 elevation:2,
                 borderRadius:5,
+                paddingHorizontal: 8 
     },
   });
   

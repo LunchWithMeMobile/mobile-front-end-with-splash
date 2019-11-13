@@ -67,14 +67,15 @@ export const loginUser = (username, password, isChecked) => {
                         console.log(resJson);
                         if (resJson.success) {
                             dispatch({ type: LOGIN_SUCCESS });
-                            setAccessToken(resJson.token, dispatch);
+                            // setAccessToken(resJson.token, dispatch);
                             setUsername(resJson.user.username, dispatch);
-                            setUserId(resJson.user.id, dispatch);
-                            if (isChecked) {
-                                AsyncStorage.setItem('accessToken', resJson.token);
-                                AsyncStorage.setItem('userId', resJson.user.id);
-                                AsyncStorage.setItem('userName', resJson.user.username);
-                            }
+                            // setUserId(resJson.user.id, dispatch);
+                            // if (isChecked) {
+                            // }
+                            AsyncStorage.setItem('accessToken', resJson.token);
+                            AsyncStorage.setItem('userId', resJson.user.id);
+                            AsyncStorage.setItem('userName', resJson.user.username);
+                            AsyncStorage.setItem('email', resJson.email);
                             Alert.alert(
                                 'Login successful!',
                                 resJson.msg,
@@ -126,7 +127,7 @@ export const setUserDetails = (accessToken, userId, username) => {
         setUsername(username, dispatch);
     };
 }
-const setUsername = (username, dispatch) => {
+/* const setUsername = (username, dispatch) => {
     AsyncStorage.setItem('USERNAME', username);
     dispatch({ type: SET_USERNAME, payload: username });
 };
@@ -139,9 +140,10 @@ const setAccessToken = (accessToken, dispatch) => {
 const setUserId = (userId, dispatch) => {
     AsyncStorage.setItem('USER_ID', userId);
     dispatch({ type: SET_USER_ID, payload: userId });
-};
+}; */
 
-/* const setUsername = (username, dispatch) => {
+
+const setUsername = (username, dispatch) => {
     dispatch({ type: SET_USERNAME, payload: username });
 };
 
@@ -152,7 +154,7 @@ const setAccessToken = (accessToken, dispatch) => {
 const setUserId = (userId, dispatch) => {
     dispatch({ type: SET_USER_ID, payload: userId });
 };
- */
+ 
 
 //signup actions------------------------------------------------
 export const signupEmailChanged = (email) => {
@@ -230,7 +232,6 @@ export const signUpUser = (email, username, password, confirmPass) => {
             }
         }).catch(err => {
             console.log(err);
-            NavigationService.navigate('Signup2');
             dispatch({ type: SIGNUP_FAILED });
             Alert.alert(
                 'Signup Failed!',

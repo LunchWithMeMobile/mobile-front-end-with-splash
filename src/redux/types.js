@@ -21,6 +21,20 @@ export const SIGNUP_FAILED = 'signup_failed';
 //signup2/editProfile
 export const PROFILE_FULLNAME_CHANGED = "profile_fullName_changed";
 
+//timePicker
+export const START_TIME_PICKED = 'start_time_picked';
+export const END_TIME_PICKED = 'end_time_picked';
+
+//profile
+export const GET_NERBY_USERS = 'get_nearby_users';
+export const GET_NERBY_USERS_SUCCESS = 'get_nearby_users_success';
+export const GET_NERBY_USERS_FAILED = 'get_nearby_users_failed';
+export const USER_LIKED = 'user_liked';
+export const USER_LIKED_SUCCESS = 'user_liked_success';
+export const USER_LIKED_FAILED = 'user_liked_failed';
+export const USER_SELECTED = 'user_selected';
+export const SET_USER_REQUESTS = 'set_user_requests';
+
 //likes
 export const GET_USER_LIKES = 'get_user_likes';
 export const GET_USER_LIKES_SUCCESS = 'get_user_likes_success';
@@ -44,6 +58,7 @@ export const REGISTRATION2_INTPROFESSION_CHANGED="registration2_InteresetedProfe
 export const SIGNUP2_FAILED="registration2_failed";
 export const SIGNUP2_SUCCESS="registration2_success";
 export const SIGNUP2_USER="registration2_user";
+export const IMAGE_PICKED = 'image_picked';
 
 //forgetpassword1
 

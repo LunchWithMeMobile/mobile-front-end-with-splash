@@ -6,11 +6,11 @@ import {
     ScrollView,
     PermissionsAndroid,
     Platform,
-    AsyncStorage,
     StyleSheet,
     TextInput,
     TouchableOpacity,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import MapView from 'react-native-maps';
 import {
@@ -18,6 +18,7 @@ import {
     MAPTIME
     
 }from '../../api/API';
+import { connect } from 'react-redux';
 
 
 import { KEY } from '../../constants/misc';
@@ -30,8 +31,8 @@ class MapScreen extends Component {
         super(props);
         this.state = {
             error: "",
-            latitude: 6.7970,//Initial Longitude
-            longitude: 79.9019,//Initial Latitude
+            latitude: 6.795127399999999,//Initial Longitude
+            longitude: 79.90078710000002,//Initial Latitude
             destination: "",
             predictions: [],
             valu1:this.props.navigation.getParam('val1', 'NO-ID'),
@@ -57,12 +58,19 @@ class MapScreen extends Component {
         );
 
     }
-    sendcoor(){
+
+    sendcoor() {
+        AsyncStorage.getItem('email').then(email => {
+            this.postdata(email);
+        });
+    }
+
+    postdata(email){
         const {latitude,longitude,valu1,valu2}=this.state  
-        const lat=latitude.toFixed(4)
-        const lon=longitude.toFixed(4)
+        const lat=latitude
+        const lon=longitude
         
-      console.log(lat,lon,valu1,valu2)
+      console.log(lat,lon,valu1,valu2, email)
       fetch(MAPTIME, {
           method: 'POST',
           headers: {
@@ -74,13 +82,13 @@ class MapScreen extends Component {
               pickupLat: lat,
               timeF:valu1,
               timeT:valu2,
-              email:'yasuriratnayake@gmail.com'
+              email
           })
       }).then(response => {
           console.log(response);
           if (response.ok) {
-              alert("location updated")
-            this.props.navigation.navigate('Profiles')
+            alert("location updated")
+            this.props.navigation.navigate('Profiles');
           } else {
              
               alert(
@@ -91,7 +99,7 @@ class MapScreen extends Component {
           }
       }).catch(err => {
           console.log(err);
-          //NavigationService.navigate('Signup2');
+         
           
           alert(
              
@@ -120,30 +128,7 @@ class MapScreen extends Component {
                 console.log(e);
             }
         }
-  /*       console.log(response);
-        if (response.ok) {
-            console.log(response.json()); 
-             alert("success");       
-                
-        } else {
-           
-            alert(
-                'map Failed!'
-                
-               
-            );
-        }
-    }).catch(err => {
-        console.log(err);
-        //NavigationService.navigate('Signup2');
-        
-        alert(
-           
-            'request eke awulak',
-            
-        );
-    }); */
-
+  
     
 
     async handleSelectedAddress(placeID) {
@@ -207,6 +192,7 @@ class MapScreen extends Component {
                 {predictions}
                 <TouchableOpacity
                                     onPress={() => this.sendcoor()}
+                                   // onPress={() => this.props.naviagtion.navigate('Likes')}
                                     style={[styles.button, { backgroundColor: '#c97b63' }]}
                                 >
                                     <Text style={styles.buttonText} >submit</Text>

@@ -14,46 +14,8 @@ import ListItem from '../../../../components/ListItem';
 
 const entireScreenWidth = Dimensions.get('window').width;
 EStyleSheet.build({ $rem: entireScreenWidth / 380 });
-/*const ListData=[
-    {
-        id:'1',
-        name:"Niroshan",
-        imgUrl:"dwdffwefwffef",
-        description:'sfffffwefw ewfefwfw fwffef '
-
-    },
-    {
-        id:'2',
-        name:"Chandima",
-        imgUrl:"dwdffwefwffef",
-        description:'sfffffwefw ewfefwfw fwffef '
-
-
-    },
-    {
-        id:'3',
-        name:"Udara",
-        imgUrl:"dwdffwefwffef",
-        description:'sfffffwefw ewfefwfw fwffef '
-
-    },
-    {
-        id:'4',
-        name:"Yasuri",
-        imgUrl:"dwdffwefwffef",
-        description:'sfffffwefw ewfefwfw fwffef '
-
-    },
-    {
-        id:'5',
-        name:"Nethmee",
-        imgUrl:"dwdffwefwffef",
-        description:'sfffffwefw ewfefwfw fwffef '
-
-    }
-]*/
 class Likes extends Component {
-    constructor(){
+    constructor(){  
         super();
         this.state={
             isLoading:false,
@@ -62,35 +24,31 @@ class Likes extends Component {
     }
 
     componentDidMount(){
-        // fetch('https://jsonplaceholder.typicode.com/users').then(()=>response.json())
-        // .then((responseJson)=>{
-        //     this.setState({
-        //         isLoading:false,
-        //         dataSource:responseJson,
-        //     })
-        // })
         this.fetchData();
     }
 
     fetchData() {
         AsyncStorage.getItem('accessToken').then(accessToken => {
-            AsyncStorage.getItem('userId').then(userId => {
-                this.props.getLikesList(accessToken, userId);
-                //getLikesList is defined in AuthAction
-            });
+            this.props.getLikesList(accessToken);
         });
     }
 
-    renderItem(item) {
-        console.log(item);
+    renderItem(item) {  
         return(
             <ListItem 
                 username={item.username}
-                fullname={item.name}
-                occupation={item.email}
+                // fullname={item.fullname}
+                // occupation={item.email}
+                // image={item.image}
+                onPress={() => this.onAccesped(item)}
             />
         )
     } 
+
+    onAccesped(user) {
+        console.log(user);
+        alert("You have accepted a request from "+user.username);
+    }
 
     renderEmptyList() {
         return(
@@ -109,7 +67,7 @@ class Likes extends Component {
                 <ActivityIndicator size="large" color="#0000ff" animating={true} />
                 :
                 <FlatList
-                    data={this.props.likesList}
+                    data={this.props.requests}
                     renderItem={({item})=> this.renderItem(item)}
                    // ListEmptyComponent={() => renderEmptyList()}
                 />
@@ -132,6 +90,7 @@ const mapStateToProps = state => {
         //app is  defined in the index file of reducers.
         likesListLoading: state.app.likesListLoading,
         likesList: state.app.likesList,
+        requests: state.app.requests
     }
 }
 

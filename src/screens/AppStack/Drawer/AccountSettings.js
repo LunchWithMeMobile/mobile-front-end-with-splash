@@ -15,26 +15,10 @@ class AccountSettings extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          //switchOn1: false,
           switchOn0: false,
           switchOn1: false,
           switchOn2: false,
-          switchOn3: false,
-          switchOn4: false,
-          switchOn5: false,
-          switchOn6: false,
-          switchOnAll:false,
-          //switchOn4: false
         };
-      }
-      onPressAll = () => {
-        this.setState({ switchOnAll: !this.state.switchOnAll });
-        this.setState({ switchOn1:! this.state.switchOnAll });
-        this.setState({ switchOn2: !this.state.switchOnAll });
-        this.setState({ switchOn3: !this.state.switchOnAll });
-        this.setState({ switchOn4: !this.state.switchOnAll });
-        this.setState({ switchOn5: !this.state.switchOnAll });
-        this.setState({ switchOn6: !this.state.switchOnAll });
       }
       
       onPress0 = () => {
@@ -44,21 +28,22 @@ class AccountSettings extends Component {
         this.setState({ switchOn1: !this.state.switchOn1 });
       }
       onPress2 = () => {
-        this.setState({ switchOn2: !this.state.switchOn2 });
+        this.setState({ 
+          switchOn2: !this.state.switchOn2,
+        });
+        if(!this.state.switchOn2) {
+          this.setState({ 
+            switchOn0: true,
+            switchOn1: true
+          }); 
+        } else {
+          this.setState({ 
+            switchOn0: false,
+            switchOn1: false
+          }); 
+        }
       }
-      onPress3 = () => {
-        this.setState({ switchOn3: !this.state.switchOn3 });
-      }
-      onPress4 = () => {
-        this.setState({ switchOn4: !this.state.switchOn4 });
-      }
-      onPress5 = () => {
-        this.setState({ switchOn5: !this.state.switchOn5 });
-      }
-      onPress6 = () => {
-        this.setState({ switchOn6: !this.state.switchOn6 });
-      }
-    
+
     render() {
         return (
             <View style={styles.MainContainer}>
@@ -81,13 +66,13 @@ class AccountSettings extends Component {
           }}
           circleStyle={{
             width: 25,
-            height: 25,
+            height: 25, 
             borderRadius: 16,
             backgroundColor: 'white', // rgb(102,134,205)
             elevation:4,
           }}
-          switchOn={this.state.switchOn1}
-          onPress={this.onPress1}
+          switchOn={this.state.switchOn0}
+          onPress={this.onPress0}
           circleColorOff='white'
           backgroundColorOn='#ffe0b2'
           circleColorOn='#ff7043'
@@ -122,8 +107,8 @@ class AccountSettings extends Component {
             backgroundColor: 'white', // rgb(102,134,205)
             elevation:4,
           }}
-          switchOn={this.state.switchOn4}
-          onPress={this.onPress4}
+          switchOn={this.state.switchOn1}
+          onPress={this.onPress1}
           circleColorOff='white'
           backgroundColorOn='#ffe0b2'
           circleColorOn='#ff7043'
@@ -157,8 +142,8 @@ class AccountSettings extends Component {
                   backgroundColor: 'white', // rgb(102,134,205)
                   elevation:4,
                 }}
-                switchOn={this.state.switchOnAll}
-                onPress={this.onPressAll}
+                switchOn={this.state.switchOn2}
+                onPress={this.onPress2}
                 circleColorOff='white'
                 backgroundColorOn='#ffe0b2'
                 circleColorOn='#e2664c'

@@ -10,15 +10,18 @@ import {
     Picker,
     Alert,
     AsyncStorage,
+    Image
 } from 'react-native';
 import { connect } from 'react-redux';
 import EStyleSheet from 'react-native-extended-stylesheet';
 import DatePicker from 'react-native-datepicker';
 import RadioForm from 'react-native-simple-radio-button';
 import moment from 'moment';
+import ImagePicker from 'react-native-image-picker';
 import * as actions from '../../redux/actions';
 import backgound from '../../assests/Images/back.jpg';
 import Imagepicker from '../../components/imagepicker.js'
+import NavigationService from '../../services/NavigationService';
 
 const entireScreenWidth = Dimensions.get('window').width;
 EStyleSheet.build({ $rem: entireScreenWidth / 380 });
@@ -29,28 +32,38 @@ let gender = [
     { label: "other", value: 'other' }
 ];
 
+const options = {
+    title: 'Select Avatar',
+    quality: 0.3
+
+};
+let fileName;
+let fileType;
+let uri;
+
 class Signup2 extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-           // dateOfBirth: moment().format('DD-MM-YYYY'),
+            // dateOfBirth: moment().format('DD-MM-YYYY'),
             fullname: '',
             //gender: '',
-           // message: '',
-           // telephone: '',
-          //  profession: '',
+            // message: '',
+            // telephone: '',
+            //  profession: '',
+            avatarSource: null,
         };
     }
 
     onFullnameChanged(value) {
         this.props.RFullnameChanged(value);
     }
-/* 
-    onTelephoneChanged(value) {
-        this.props.RTelephoneChanged(value);
-    } */
+    /* 
+        onTelephoneChanged(value) {
+            this.props.RTelephoneChanged(value);
+        } */
 
     onDOBChanged(value) {
         this.props.RDOBChanged(value);
@@ -65,27 +78,34 @@ class Signup2 extends Component {
     onProfessionChanged(value) {
         this.props.RProfessionChanged(value);
     }
-    onInterestedProfessionChanged(value){
+    onInterestedProfessionChanged(value) {
 
         this.props.InterestedProfessionChanged(value);
     }
 
-    onSubmitPressed() {
-        
-        
-        const {fname,gender,dob,description,telephone,profession,email,intProfession}=this.props
-        this.validate(fname,gender,dob,description,telephone,profession,email,intProfession);
-
-        // this.props.RDetails(fname,gender,dob,description,telephone,profession)
-       // this.props.navigation.navigate('PreferenceSelect');
+    pickImage() {
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log(response)
+            if (!response.didCancel) {
+                fileName = response.fileName;
+                fileType = response.type;
+                uri = response.uri;
+                const source = { uri: response.uri };
+                this.setState({  
+                    avatarSource: source,
+                });
+                this.props.onImagePicked(source);
+            }
+        });
     }
-   
-    validate(fname,gender,dob,description,telephone,profession,email,intProfession) {
-        //const { fname, gender, description, telephone, profession } = this.props; 
-        console.log("hiii");
-        //const { fname, gender, description, telephone, profession } = this.state;
-        console.log(fname, gender, dob,description, telephone, profession,intProfession);
-        if (fname === '' || gender === '' || description === '' || telephone === '' || profession === '',intProfession==='') {
+
+    onSubmitPressed() {
+        const { fname, gender, dob, description, profession, email, intProfession, image } = this.props;
+        this.validate(fname, gender, dob, description, profession, email, intProfession, image);
+    }
+
+    validate(fname, gender, dob, description, profession, email, intProfession, image) {
+        if (fname === '' || gender === '' || description === '' || image === null) {
             Alert.alert(
                 'Error!',
                 'Please fill all the fields',
@@ -95,8 +115,7 @@ class Signup2 extends Component {
             );
         } else {
             // this.props.submitUserDetails()
-            this.props.RDetails(fname,gender,dob,description,telephone,profession,email,intProfession)
-            
+            NavigationService.navigate('PreferenceSelect');
         }
     }
 
@@ -112,7 +131,7 @@ class Signup2 extends Component {
                                 style={styles.input}
                                 placeholder="Enter Full Name"
                                 value={this.state.fname}
-   
+
                                 onChangeText={text => this.onFullnameChanged(text)}
                                 placeholderTextColor="#ddab9c"
                             />
@@ -126,7 +145,7 @@ class Signup2 extends Component {
                             <RadioForm
                                 radio_props={gender}
                                 initial={-1}
-                                onPress={(value) => {this.onGenderChanged(value) }}
+                                onPress={(value) => { this.onGenderChanged(value) }}
                                 buttonSize={12}
                                 selectedButtonColor={'black'}
                                 buttonColor={'grey'}
@@ -166,13 +185,14 @@ class Signup2 extends Component {
                                 //secureTextEntry={true}
                                 onChangeText={text => this.onDescriptionChanged(text)}
                                 placeholderTextColor="#D5AFAF"
+                                value={this.props.description}
                             />
-                         
+
                             <Text style={styles.txt}>Select Your Occupation*</Text>
                             <Picker
                                 //selectedValue={this.state.profession}
                                 style={{ height: 50, width: 150, color: "#D5AFAF" }}
-                                selectedValue={this.state.profession}
+                                selectedValue={this.props.profession}
                                 onValueChange={(itemValue) =>
                                     this.onProfessionChanged(itemValue)
                                 }>
@@ -186,7 +206,7 @@ class Signup2 extends Component {
                             <Picker
                                 //selectedValue={this.state.profession}
                                 style={{ height: 50, width: 150, color: "#D5AFAF" }}
-                                selectedValue={this.state.profession}
+                                selectedValue={this.props.intProfession}
                                 onValueChange={(itemValue) =>
                                     this.onInterestedProfessionChanged(itemValue)
                                 }>
@@ -196,7 +216,13 @@ class Signup2 extends Component {
                                 <Picker.Item label="Professor" value="professor" />
                                 <Picker.Item label="Other" value="other" />
                             </Picker>
-                            <Imagepicker/>
+                            <View style={{ width: '90%', height: 200 }}>
+                                <TouchableOpacity
+                                    onPress={this.pickImage.bind(this)}>
+                                    <Text style={styles.btn}>select a profile picture*</Text>
+                                </TouchableOpacity>
+                                <Image source={this.state.avatarSource} style={{ width: '50%', height: '90%' }} />
+                            </View>
                             <Text>Fill the preference to obtain a  better service</Text>
                             <TouchableOpacity
                                 onPress={() => this.onSubmitPressed()}
@@ -316,14 +342,15 @@ const styles = EStyleSheet.create({
 const mapStateToProps = state => {
     return {
         fname: state.auth2.fname,
-        gender:state.auth2.gender,
-       telephone: state.auth2.telephone,
-       dob: state.auth2.dob,
-       description: state.auth2.description,
-        profession:state.auth2.profession,
-        email:state.auth.signupEmail,
-        intProfession:state.auth2.intProfession,
-       // loading: state.auth.loginLoading
+        gender: state.auth2.gender,
+        telephone: state.auth2.telephone,
+        dob: state.auth2.dob,
+        description: state.auth2.description,
+        profession: state.auth2.profession,
+        email: state.auth.signupEmail,
+        intProfession: state.auth2.intProfession,
+        image: state.auth2.image,
+        // loading: state.auth.loginLoading
     };
 };
 export default connect(mapStateToProps, actions)(Signup2);

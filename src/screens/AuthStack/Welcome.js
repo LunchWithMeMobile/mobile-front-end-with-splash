@@ -36,7 +36,7 @@ class Welcome extends Component {
                             </View>
                             <View>
                                 <TouchableOpacity
-                                    onPress={() => this.props.navigation.navigate('Signup2')}
+                                    onPress={() => this.props.navigation.navigate('Signup')}
                                     style={[styles.button, { backgroundColor: '#c97b63' }]}
                                 >
                                     <Text style={styles.buttonText} >Sign up</Text>
