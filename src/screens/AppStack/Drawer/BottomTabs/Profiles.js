@@ -69,7 +69,7 @@ class Profiles extends Component {
     }
     superlike(){
         alert("you have super liked ,now you can send a message ");
-        this.props.navigation.navigate('ChatListScreen')
+        //this.props.navigation.navigate('ChatListScreen')
         
         //console.log(this.state.data[index].first);
         //console.log(index);
@@ -126,7 +126,7 @@ class Profiles extends Component {
                                                 <Text style={[styles.text, {fontSize: EStyleSheet.value('15rem')}]}>{item.username}</Text>
                                             </View>
                                             <View style={styles.rightContainer}>
-                                                <TouchableOpacity style={styles.btn}>
+                                                <TouchableOpacity style={styles.btn} onPress={() => this.superlike()}>
                                                     <Text style={styles.btnText}>Superlike</Text>
                                                 </TouchableOpacity>
                                             </View>

@@ -54,6 +54,7 @@ class Signup2 extends Component {
             // telephone: '',
             //  profession: '',
             avatarSource: null,
+            ImageData:""
         };
     }
 
@@ -91,8 +92,13 @@ class Signup2 extends Component {
                 fileType = response.type;
                 uri = response.uri;
                 const source = { uri: response.uri };
+                 data=response.data;
+                 const imgdata={data:response.data}
+                console.log(uri);
                 this.setState({  
                     avatarSource: source,
+                    ImageData:imgdata,
+
                 });
                 this.props.onImagePicked(source);
             }
@@ -101,6 +107,7 @@ class Signup2 extends Component {
 
     onSubmitPressed() {
         const { fname, gender, dob, description, profession, email, intProfession, image } = this.props;
+        console.log("inside onSubmitPressed ");
         this.validate(fname, gender, dob, description, profession, email, intProfession, image);
     }
 
@@ -123,14 +130,16 @@ class Signup2 extends Component {
         return (
             <ScrollView >
                 <View style={styles.container}>
-                    <ImageBackground source={backgound} blurRadius={10} style={{ width: '100%', height: '100%' }}>
-                        <View style={{ padding: 10 }}>
+                   
+                    <ImageBackground source={backgound}  style={{ width: '100%', height: '100%' }}>
+                        <View style={styles.loginContainer}>
+                        <View style={{ padding: 10 ,paddingLeft:20}}>
                             <Text style={styles.txtH}>Create Account</Text>
-                            <Text style={styles.txt}>Full Name*</Text>
+                            <Text style={styles.txt}>Full Name</Text>
                             <TextInput
                                 style={styles.input}
                                 placeholder="Enter Full Name"
-                                value={this.state.fname}
+                                value={this.props.fname}
 
                                 onChangeText={text => this.onFullnameChanged(text)}
                                 placeholderTextColor="#ddab9c"
@@ -141,22 +150,22 @@ class Signup2 extends Component {
                                         onChangeText={(email) => this.onEmailChanged(email)}
                                         placeholderTextColor="#ddab9c"
                                     /> */}
-                            <Text style={styles.txt}>Gender*</Text>
+                            <Text style={styles.txt}>Gender</Text>
                             <RadioForm
                                 radio_props={gender}
                                 initial={-1}
                                 onPress={(value) => { this.onGenderChanged(value) }}
-                                buttonSize={12}
-                                selectedButtonColor={'black'}
-                                buttonColor={'grey'}
+                                buttonSize={10}
+                                selectedButtonColor={'#D5AFAF'}
+                                buttonColor={'#fffff'}
                                 //labelColor={'#fffffb'}
-                                labelStyle={{ fontSize: 15, color: '#fffffb', fontWeight: "bold" }}
+                                labelStyle={{ fontSize: 15, color: '#fffffb' }}
                             //buttonOuterSize={12}
                             />
                             <Text style={styles.txt}>Date of Birth*</Text>
                             <DatePicker
                                 style={{ width: 200 }}
-                                date={this.state.dob} //initial date from state
+                                date={this.props.dob} //initial date from state
                                 mode="date" //The enum of date, datetime and time
                                 placeholder="select date"
                                 format="DD-MM-YYYY"
@@ -191,39 +200,45 @@ class Signup2 extends Component {
                             <Text style={styles.txt}>Select Your Occupation*</Text>
                             <Picker
                                 //selectedValue={this.state.profession}
-                                style={{ height: 50, width: 150, color: "#D5AFAF" }}
+                                style={{ height: 50, width: 250, color: "#D5AFAF" }}
                                 selectedValue={this.props.profession}
                                 onValueChange={(itemValue) =>
                                     this.onProfessionChanged(itemValue)
                                 }>
-                                <Picker.Item label="student" value="student" />
-                                <Picker.Item label="software Developer" value="softwareDeveloper" />
-                                <Picker.Item label="Doctor" value="doctor" />
-                                <Picker.Item label="Professor" value="professor" />
-                                <Picker.Item label="Other" value="other" />
+                                <Picker.Item label="Engineer" value="Engineer" />
+                                <Picker.Item label="Doctor" value="Doctor" />
+                                <Picker.Item label="Lecturer" value="Lecturer" />
+                                <Picker.Item label="Software developer" value="Software developer" />
+                                <Picker.Item label="Businessman" value="Businessman" />
+                                <Picker.Item label="Lawyer" value="Lawyer" />
+                                <Picker.Item label="Sportsman" value="Sportsman" />
+                                <Picker.Item label="Musician" value="Musician" />
                             </Picker>
                             <Text style={styles.txt}>Select the prefered Occupation of the partner*</Text>
                             <Picker
                                 //selectedValue={this.state.profession}
-                                style={{ height: 50, width: 150, color: "#D5AFAF" }}
+                                style={{ height: 50, width: 250, color: "#D5AFAF" }}
                                 selectedValue={this.props.intProfession}
                                 onValueChange={(itemValue) =>
                                     this.onInterestedProfessionChanged(itemValue)
                                 }>
-                                <Picker.Item label="student" value="student" />
-                                <Picker.Item label="software Developer" value="softwareDeveloper" />
-                                <Picker.Item label="Doctor" value="doctor" />
-                                <Picker.Item label="Professor" value="professor" />
-                                <Picker.Item label="Other" value="other" />
+                                <Picker.Item label="Engineer" value="Engineer" />
+                                <Picker.Item label="Doctor" value="Doctor" />
+                                <Picker.Item label="Lecturer" value="Lecturer" />
+                                <Picker.Item label="Software developer" value="Software developer" />
+                                <Picker.Item label="Businessman" value="Businessman" />
+                                <Picker.Item label="Lawyer" value="Lawyer" />
+                                <Picker.Item label="Sportsman" value="Sportsman" />
+                                <Picker.Item label="Musician" value="Musician" />
                             </Picker>
                             <View style={{ width: '90%', height: 200 }}>
                                 <TouchableOpacity
                                     onPress={this.pickImage.bind(this)}>
                                     <Text style={styles.btn}>select a profile picture*</Text>
                                 </TouchableOpacity>
-                                <Image source={this.state.avatarSource} style={{ width: '50%', height: '90%' }} />
+                                <Image source={this.state.avatarSource} style={{ width: '80%', height: '75%' }} />
                             </View>
-                            <Text>Fill the preference to obtain a  better service</Text>
+                            <Text style={{ color: 'white', fontSize: 15,marginTop:10 }}>Fill the preference to obtain a  better service</Text>
                             <TouchableOpacity
                                 onPress={() => this.onSubmitPressed()}
                                 style={styles.signInB}
@@ -231,7 +246,9 @@ class Signup2 extends Component {
                                 <Text style={{ color: 'white', fontSize: 15 }}>submit</Text>
                             </TouchableOpacity>
                         </View>
+                        </View>
                     </ImageBackground>
+                   
                 </View>
             </ScrollView>
         );
@@ -259,6 +276,11 @@ const styles = EStyleSheet.create({
         elevation: 3,
         alignSelf: 'center',
     },
+    loginContainer: {
+        width: "100%",
+        height: "100%",
+        backgroundColor: "rgba(30,14,4,0.7)",
+    },
     signInB: {
         backgroundColor: '#c97b63',
         width: '120rem',
@@ -274,13 +296,13 @@ const styles = EStyleSheet.create({
         //borderColor:'#0000dd',
         //backgroundColor:'rgba(240,208,193,0.35)' ,
         height: '40rem',
-        width: "80%",
+        width: "100%",
         marginBottom: '30rem',
         marginTop: '10rem',
-        color: '#000000',
+        color: '#D5AFAF',
         borderRadius: '20rem',
         paddingLeft: '20rem',
-        color: '#ffffff',
+        //color: '#ffffff',
         borderColor: '#c97b63',
         borderStyle: 'solid',
         borderWidth: '1.5rem',
@@ -290,14 +312,14 @@ const styles = EStyleSheet.create({
         //textAlign:"center",
         marginTop: 10,
         fontWeight: "bold",
-        fontSize: 25
+        fontSize: 20
 
     },
     txt: {
         color: "#fffffb",
         //textAlign:"center",
         marginTop: 15,
-        fontWeight: "bold",
+        //fontWeight: "bold",
         fontSize: 20,
         paddingBottom: 15
 

@@ -3,11 +3,13 @@ import { createDrawerNavigator } from 'react-navigation';
 import ProfileSettings from '../screens/AppStack/Drawer/ProfileSettings';
 //import PreferenceSelect from '../screens/AuthStack/PreferenceSelect';
 import { BottomTabNavigator } from '../navigators/BottomTabNavigator';
+import myprofile from '../screens/AppStack/Drawer/myprofile';
 
 export const DrawerNavigator = createDrawerNavigator(
     {
         Home: BottomTabNavigator,
-        MyProfile: ProfileSettings,
+        visitedProfile: ProfileSettings,
+        MyProfile:myprofile,
         
         
     },
