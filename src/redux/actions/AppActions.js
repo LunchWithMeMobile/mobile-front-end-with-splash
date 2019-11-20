@@ -86,6 +86,7 @@ export const getNearbyUsers = accessToken => {
 };
 
 export const like = (userId, username, accessToken) => {
+    console.log("userId  "+userId+" userNAme : "+username+" access Token "+accessToken)
     return(dispatch) => {
         dispatch({ type: USER_LIKED });
         fetch(`${LIKE}/${userId}/${username}`, {

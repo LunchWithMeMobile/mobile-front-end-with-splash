@@ -1,5 +1,5 @@
 import { createDrawerNavigator } from 'react-navigation';
-import AccountSettings from '../screens/AppStack/Drawer/AccountSettings';
+//import AccountSettings from '../screens/AppStack/Drawer/AccountSettings';
 import ProfileSettings from '../screens/AppStack/Drawer/ProfileSettings';
 //import PreferenceSelect from '../screens/AuthStack/PreferenceSelect';
 import { BottomTabNavigator } from '../navigators/BottomTabNavigator';
@@ -8,7 +8,7 @@ export const DrawerNavigator = createDrawerNavigator(
     {
         Home: BottomTabNavigator,
         MyProfile: ProfileSettings,
-        Settings: AccountSettings,
+        
         
     },
     {

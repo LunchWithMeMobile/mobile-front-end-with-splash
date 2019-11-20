@@ -57,7 +57,10 @@ class Profiles extends Component {
     }
 
     onSwipeLeft(index) {
+        alert("liked");
         AsyncStorage.getItem('accessToken').then(accessToken => {
+            console.log("inside liked")
+            //console.log("check userId"+this.filterLoggedInUser()[index]._id);
             this.props.like(this.filterLoggedInUser()[index]._id, this.filterLoggedInUser()[index].username, accessToken);
         });
     }
