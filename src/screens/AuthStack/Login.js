@@ -85,24 +85,14 @@ class Login extends Component {
                                 value={this.props.password}
                                 onChangeText={text => this.onPasswordChanged(text)}
                             />
-                            <View style={styles.check}>
-                                <CheckBox
-                                    label={'Remember me'}
-                                    checked={this.state.isChecked}
-                                    onChange={(value) => this.onChecked(value)}
-                                    checkboxStyle={{
-                                        width: EStyleSheet.value('15rem'),
-                                        height: EStyleSheet.value('15rem'),
-                                    }}
-                                    checkedImage={checked}
-                                    uncheckedImage={unchecked}
-                                />
-                                <TouchableOpacity
+                            
+                             
+                                <TouchableOpacity 
                                     onPress={() => this.props.navigation.navigate('ForgotPassword')}
                                 >
-                                    <Text style={{ color: 'rgba(240,208,193,0.9)', marginLeft: 40, fontStyle: 'italic' }}>Forgot Password</Text>
+                                    <Text style={{ color: 'rgba(240,208,193,0.9)', marginLeft: 40, fontStyle: 'italic',alignItems:'center',justifyContent: 'center' }}>Forgot Password</Text>
                                 </TouchableOpacity>
-                            </View>
+                            
                             {
                                 this.props.loading ?
                                     <SkypeIndicator color={'white'} size={EStyleSheet.value('40rem')} />
@@ -170,7 +160,7 @@ const styles = EStyleSheet.create({
     },
     check: {
         flexDirection: 'row',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         width: '300rem',
         paddingLeft: '10rem'
 
